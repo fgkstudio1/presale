@@ -12,6 +12,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "^5.1.3",
+    "customize-cra": "1.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.1",
@@ -26,7 +27,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint ./src -c .eslintrc.js --ext js,jsx",
+    "lint:css": "stylelint './src/**/*.style.js'",
+    "prettier": "prettier --write \"./src/**/*.{js,json,scss,md}\""
   },
   "eslintConfig": {
     "extends": [
@@ -47,11 +51,40 @@
     ]
   },
   "devDependencies": {
-    "cz-conventional-changelog": "3.3.0"
+    "@babel/plugin-proposal-optional-chaining": "7.12.7",
+    "babel-plugin-styled-components": "1.12.0",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint-config-prettier": "6.15.0",
+    "eslint-config-react-app": "6.0.0",
+    "eslint-plugin-prettier": "3.1.4",
+    "husky": "2.1.0",
+    "lint-staged": "8.1.5",
+    "prettier": "2.2.1",
+    "stylelint-config-recommended": "3.0.0",
+    "stylelint-config-styled-components": "0.1.1",
+    "stylelint-processor-styled-components": "1.10.0"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "*.{js,json,scss}": [
+        "prettier --write",
+        "yarn run lint --fix",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "*.json",
+      "yarn.lock"
+    ]
   }
 }

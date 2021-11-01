@@ -16,11 +16,11 @@ export const SocialIcons = styled.div`
 export const SocialIconLink = styled.a`
   color: #fff;
   font-size: 3rem;
-  
+
   &:hover {
     color: #fff;
   }
-  
+
   & + * {
     margin-left: 1.5rem;
   }
@@ -28,11 +28,11 @@ export const SocialIconLink = styled.a`
 
 export const ButtonsWrapper = styled.span`
   display: flex;
-  
+
   .btn {
     color: #212529 !important;
     border: 0 !important;
-    
+
     + .btn {
       margin-left: 1rem;
     }
@@ -45,6 +45,5 @@ export const Root = styled.header`
   flex-direction: column;
   margin-bottom: 6rem;
 `;
-
 
 export default Root;

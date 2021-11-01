@@ -1,12 +1,12 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import media from "styled-media-query";
+import media from 'styled-media-query';
 
 export const ReferralInput = styled.input`
-  background-color: #33363D;
+  background-color: #33363d;
   border: none;
   margin-top: 5px;
   padding: 10px !important;
-  color: #C8C8C8;
+  color: #c8c8c8;
   border-radius: 30px;
   text-align: center;
 
@@ -37,17 +37,20 @@ export const Description = styled.p`
   font-size: 1.8rem;
 `;
 
+/* eslint-disable max-len */
 export const Global = createGlobalStyle`
   html {
     font-size:62.5%;
   }
   body{
     background-image: linear-gradient(to left top, #000000, #000000, #222123, #060606, #000000, #2a2b2f, #2f3133, #1f2123, #35393c, #393e40, #2b2d2d, #2a2f2f);
-    font-family: 'Poppins', sans-serif;
     min-height: 100vh;
     background-repeat: no-repeat;
     padding-bottom: 10rem;
     background-color: #000;
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   .main-bg{

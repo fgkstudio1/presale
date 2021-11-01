@@ -7,7 +7,7 @@ const Root = styled.div`
   color: #bfbfbf;
   font-size: 1.5rem;
   margin-top: 1.5rem;
-  
+
   strong {
     color: #eaae05;
   }

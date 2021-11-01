@@ -181,7 +181,7 @@ input[type=number] {
     color: #C8C8C8;
     font-size: 18px;
     border-radius: 30px;
-    background: url('../img/favico-portoken.png') right no-repeat;
+    background: url('img/favico-portoken.png') right no-repeat;
     background-size: 55px ; 
 }
 

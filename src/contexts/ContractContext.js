@@ -21,6 +21,7 @@ export const ContractProvider = (props) => {
   const [openTime, setOpenTime] = useState('');
   const [closeTime, setCloseTime] = useState('');
   const [claimed, setClaimed] = useState(0);
+  const [tokenToClaim, setTokenToClaim] = useState(0);
   const [hardCap, setHardCap] = useState(0);
   const [softCap, setSoftCap] = useState(0);
   const [investments, setInvestments] = useState(0);
@@ -84,6 +85,14 @@ export const ContractProvider = (props) => {
         .call()
         .then((data) => {
           setClaimed(data);
+        })
+        .catch(handleContractMethodError);
+
+      contract.methods
+        .tokenToClaim(account)
+        .call()
+        .then((data) => {
+          setTokenToClaim(web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
 
@@ -180,12 +189,26 @@ export const ContractProvider = (props) => {
     [account, contract, handleContractMethodError]
   );
 
+  const claimTokens = useCallback(
+    (value, callback) => {
+      contract.methods
+        .claimTokens()
+        .send(
+          { from: account, value: web3.utils.toWei(value.toString()), gasLimit: 150000 },
+          callback
+        )
+        .catch(handleContractMethodError);
+    },
+    [account, contract, handleContractMethodError]
+  );
+
   const contextValue = useMemo(() => {
     return {
       values: {
         openTime,
         closeTime,
         claimed,
+        tokenToClaim,
         hardCap,
         softCap,
         investments,
@@ -198,6 +221,7 @@ export const ContractProvider = (props) => {
       },
       methods: {
         invest,
+        claimTokens,
       },
       connect,
       disconnect,
@@ -207,6 +231,7 @@ export const ContractProvider = (props) => {
     openTime,
     closeTime,
     claimed,
+    tokenToClaim,
     hardCap,
     softCap,
     investments,
@@ -220,6 +245,7 @@ export const ContractProvider = (props) => {
     disconnect,
     active,
     invest,
+    claimTokens,
   ]);
 
   return <ContractContext.Provider value={contextValue}>{children}</ContractContext.Provider>;

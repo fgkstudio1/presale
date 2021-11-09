@@ -11,7 +11,6 @@ const TradeForm = () => {
     values: { tokenPrice },
     methods: { invest },
     active,
-    refreshValues,
   } = useContractContext();
 
   const { register, setValue, handleSubmit, getValues, watch } = useForm({

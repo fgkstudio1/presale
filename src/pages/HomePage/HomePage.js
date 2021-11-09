@@ -4,7 +4,7 @@ import Header from 'components/Header';
 import ContentBox from 'components/ContentBox';
 import { useContractContext } from 'contexts/ContractContext';
 import Price from 'components/Price';
-import Input from 'components/TextInput';
+import ClaimForm from 'components/ClaimForm';
 import TradeForm from 'components/TradeForm';
 import { Description } from './HomePage.style';
 
@@ -94,17 +94,7 @@ const HomePage = () => {
           <TradeForm />
         </Col>
         <Col sm={12} md={12} lg={6}>
-          <ContentBox title="Claim PORT Token">
-            <div className="input-group mt-4">
-              <Input type="text" className="dark-input w-100 mt-2" readOnly defaultValue={0} />
-            </div>
-            <p className="text-muted mt-3">
-              You Can Claim your Tokens After: <b id="claimTokenDate" />
-            </p>
-            <button className="btn btn-primary buy-button claim-max-button w-100 py-3 ">
-              Claim PORT Tokens
-            </button>
-          </ContentBox>
+          <ClaimForm />
         </Col>
       </Row>
     </Container>

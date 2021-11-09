@@ -4,14 +4,14 @@ import TextInput from 'components/TextInput';
 import arrowDown from 'images/arrow-down.svg';
 import ContentBox from 'components/ContentBox';
 import { useContractContext } from 'contexts/ContractContext';
-import web3 from 'web3';
 
 const TradeForm = () => {
   const [isInitialValueSet, setIsInitialValueSet] = useState(false);
   const {
-    values: { account, tokenPrice },
+    values: { tokenPrice },
     methods: { invest },
     active,
+    refreshValues,
   } = useContractContext();
 
   const { register, setValue, handleSubmit, getValues, watch } = useForm({
@@ -39,7 +39,7 @@ const TradeForm = () => {
 
   const onSubmit = useCallback(
     ({ bnbAmount }) => {
-      invest(web3.utils.toWei(0.1)).call({ from: account }, (error, response) => {
+      invest(bnbAmount, (error, response) => {
         if (error) {
           console.log('=== ERROR: ', error);
         } else {
@@ -47,7 +47,7 @@ const TradeForm = () => {
         }
       });
     },
-    [account, invest]
+    [invest]
   );
 
   // Set initial token amount

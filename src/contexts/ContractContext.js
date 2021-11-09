@@ -166,16 +166,18 @@ export const ContractProvider = (props) => {
   }, [runContractMethods]);
 
   const invest = useCallback(
-    (bnbPrice) => {
+    (value, callback) => {
+      console.log({ from: account, value });
+
       contract.methods
-        .invest(web3.utils.toWei(bnbPrice))
-        .call()
-        .then((data) => {
-          console.log('=== INVEST RESPONSE: ', data);
-        })
+        .invest()
+        .send(
+          { from: account, value: web3.utils.toWei(value.toString()), gasLimit: 150000 },
+          callback
+        )
         .catch(handleContractMethodError);
     },
-    [contract, handleContractMethodError]
+    [account, contract, handleContractMethodError]
   );
 
   const contextValue = useMemo(() => {

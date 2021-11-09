@@ -11,11 +11,32 @@ import {
   faTelegram,
   faDiscord,
 } from '@fortawesome/free-brands-svg-icons';
-import Root, { Logo, SubTitle, SocialIcons, SocialIconLink, ButtonsWrapper } from './Header.style';
+import { InjectedConnector } from '@web3-react/injected-connector';
+import { useWeb3React } from '@web3-react/core';
+
+import Root, {
+  Logo,
+  SubTitle,
+  SocialIcons,
+  SocialIconLink,
+  ButtonsWrapper,
+  AuthSection,
+} from './Header.style';
 
 import logo from 'images/portoken-logo21.png';
+import { useContractContext } from '../../contexts/ContractContext';
+
+const injectedConnector = new InjectedConnector({
+  supportedChainIds: [
+    56, // mainnet
+    97, // testnet
+  ],
+});
 
 const Header = () => {
+  const { active, account, library, connector, activate, deactivate } = useWeb3React();
+  const { closeTime, claimed } = useContractContext();
+
   const [userBsc, setUserBsc] = useState('');
   const [showRefModal, setShowRefModal] = useState(false);
   const handleAddToMetamaskButtonClick = useCallback(() => {
@@ -36,8 +57,35 @@ const Header = () => {
     }
   }, [userBsc]);
 
+  const connect = useCallback(async () => {
+    try {
+      await activate(injectedConnector);
+    } catch (ex) {
+      console.log(ex);
+    }
+  }, [activate]);
+
+  const disconnect = useCallback(async () => {
+    try {
+      deactivate();
+    } catch (ex) {
+      console.log(ex);
+    }
+  }, [deactivate]);
+
   return (
     <Root>
+      <AuthSection>
+        {active ? (
+          <Button onClick={disconnect} className="btn-danger mb-4">
+            Disconnect
+          </Button>
+        ) : (
+          <Button onClick={connect} className="btn-success mb-4">
+            Connect
+          </Button>
+        )}
+      </AuthSection>
       <Logo src={logo} alt="Portoken logo" />
       <SubTitle className="mt-4 text-light">Join Portoken Presale</SubTitle>
 

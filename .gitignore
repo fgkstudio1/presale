@@ -28,3 +28,4 @@ logs
 
 .idea
 .eslintcache
+src/config/contract.json

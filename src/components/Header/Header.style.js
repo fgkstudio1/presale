@@ -29,13 +29,30 @@ export const SocialIconLink = styled.a`
 export const ButtonsWrapper = styled.span`
   display: flex;
 
-  .btn {
+  .btn,
+  .btn:hover,
+  .btn:active,
+  .btn:focus {
     color: #212529 !important;
     border: 0 !important;
 
     + .btn {
       margin-left: 1rem;
     }
+  }
+`;
+
+export const AuthSection = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  .btn,
+  .btn:hover,
+  .btn:active,
+  .btn:focus {
+    color: #212529 !important;
+    border: 0 !important;
   }
 `;
 

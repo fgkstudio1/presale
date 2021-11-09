@@ -1,19 +1,19 @@
 module.exports = {
-  extends: ["react-app", "prettier", "prettier/react"],
-  plugins: ["react", "prettier", "react-hooks"],
-  parser: "babel-eslint",
+  extends: ['react-app', 'prettier', 'prettier/react'],
+  plugins: ['react', 'prettier', 'react-hooks'],
+  parser: 'babel-eslint',
   rules: {
-    "react/jsx-filename-extension": [
+    'react/jsx-filename-extension': [
       1,
       {
-        extensions: [".js", "jsx"],
+        extensions: ['.js', 'jsx'],
       },
     ],
-    "prettier/prettier": "error",
-    "max-len": ["error", 100],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "consistent-return": "off",
+    'prettier/prettier': 'error',
+    'max-len': ['error', 100],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'consistent-return': 'off',
   },
   env: {
     browser: true,

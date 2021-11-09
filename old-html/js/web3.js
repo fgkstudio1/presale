@@ -8751,7 +8751,7 @@
       ],
       63: [
         function (require, module, exports) {
-          exports.utils = require('./des/utils');
+          exports.utils = require('./des/config');
           exports.Cipher = require('./des/cipher');
           exports.DES = require('./des/des');
           exports.CBC = require('./des/cbc');
@@ -8965,7 +8965,7 @@
           var assert = require('minimalistic-assert');
           var inherits = require('inherits');
 
-          var utils = require('./utils');
+          var utils = require('./config');
           var Cipher = require('./cipher');
 
           function DESState() {
@@ -10351,7 +10351,7 @@
           var elliptic = exports;
 
           elliptic.version = require('../../package.json').version;
-          elliptic.utils = require('./elliptic/utils');
+          elliptic.utils = require('./elliptic/config');
           elliptic.rand = require('brorand');
           elliptic.curve = require('./elliptic/curve');
           elliptic.curves = require('./elliptic/curves');
@@ -10373,7 +10373,7 @@
       74: [
         function (require, module, exports) {
           var BN = require('bn.js');
-          var utils = require('../utils');
+          var utils = require('../config');
           var getNAF = utils.getNAF;
           var getJSF = utils.getJSF;
           var assert = utils.assert;
@@ -10715,7 +10715,7 @@
       ],
       75: [
         function (require, module, exports) {
-          var utils = require('../utils');
+          var utils = require('../config');
           var BN = require('bn.js');
           var inherits = require('inherits');
           var Base = require('./base');
@@ -11137,7 +11137,7 @@
           var inherits = require('inherits');
           var Base = require('./base');
 
-          var utils = require('../utils');
+          var utils = require('../config');
 
           function MontCurve(conf) {
             Base.call(this, 'mont', conf);
@@ -11315,7 +11315,7 @@
       ],
       78: [
         function (require, module, exports) {
-          var utils = require('../utils');
+          var utils = require('../config');
           var BN = require('bn.js');
           var inherits = require('inherits');
           var Base = require('./base');
@@ -12218,7 +12218,7 @@
 
           var hash = require('hash.js');
           var curve = require('./curve');
-          var utils = require('./utils');
+          var utils = require('./config');
 
           var assert = utils.assert;
 
@@ -12428,7 +12428,7 @@
         function (require, module, exports) {
           var BN = require('bn.js');
           var HmacDRBG = require('hmac-drbg');
-          var utils = require('../utils');
+          var utils = require('../config');
           var curves = require('../curves');
           var rand = require('brorand');
           var assert = utils.assert;
@@ -12656,7 +12656,7 @@
       81: [
         function (require, module, exports) {
           var BN = require('bn.js');
-          var utils = require('../utils');
+          var utils = require('../config');
           var assert = utils.assert;
 
           function KeyPair(ec, options) {
@@ -12772,7 +12772,7 @@
         function (require, module, exports) {
           var BN = require('bn.js');
 
-          var utils = require('../utils');
+          var utils = require('../config');
           var assert = utils.assert;
 
           function Signature(options, enc) {
@@ -12903,7 +12903,7 @@
         function (require, module, exports) {
           var hash = require('hash.js');
           var curves = require('../curves');
-          var utils = require('../utils');
+          var utils = require('../config');
           var assert = utils.assert;
           var parseBytes = utils.parseBytes;
           var KeyPair = require('./key');
@@ -13018,7 +13018,7 @@
       ],
       84: [
         function (require, module, exports) {
-          var utils = require('../utils');
+          var utils = require('../config');
           var assert = utils.assert;
           var parseBytes = utils.parseBytes;
           var cachedProperty = utils.cachedProperty;
@@ -13112,7 +13112,7 @@
       85: [
         function (require, module, exports) {
           var BN = require('bn.js');
-          var utils = require('../utils');
+          var utils = require('../config');
           var assert = utils.assert;
           var cachedProperty = utils.cachedProperty;
           var parseBytes = utils.parseBytes;
@@ -14099,7 +14099,7 @@
               '/eth-lib',
               '/secp256k1',
               '/web3-eth-accounts/eth-lib',
-              '/web3-utils/eth-lib',
+              '/web3-config/eth-lib',
             ],
             _resolved: 'https://registry.npmjs.org/elliptic/-/elliptic-6.5.2.tgz',
             _shasum: '05c5678d7173c049d8ca433552224a495d0e3762',
@@ -15622,7 +15622,7 @@
       95: [
         function (require, module, exports) {
           Object.defineProperty(exports, '__esModule', { value: true });
-          const utils_1 = require('./utils');
+          const utils_1 = require('./config');
           /**
            * Returns true if the bloom is a valid bloom
            * @param bloom The bloom
@@ -26190,7 +26190,7 @@
         function (require, module, exports) {
           var hash = exports;
 
-          hash.utils = require('./hash/utils');
+          hash.utils = require('./hash/config');
           hash.common = require('./hash/common');
           hash.sha = require('./hash/sha');
           hash.ripemd = require('./hash/ripemd');
@@ -26214,7 +26214,7 @@
       ],
       144: [
         function (require, module, exports) {
-          var utils = require('./utils');
+          var utils = require('./config');
           var assert = require('minimalistic-assert');
 
           function BlockHash() {
@@ -26303,7 +26303,7 @@
       ],
       145: [
         function (require, module, exports) {
-          var utils = require('./utils');
+          var utils = require('./config');
           var assert = require('minimalistic-assert');
 
           function Hmac(hash, key, enc) {
@@ -26348,7 +26348,7 @@
       ],
       146: [
         function (require, module, exports) {
-          var utils = require('./utils');
+          var utils = require('./config');
           var common = require('./common');
 
           var rotl32 = utils.rotl32;
@@ -26784,7 +26784,7 @@
       ],
       148: [
         function (require, module, exports) {
-          var utils = require('../utils');
+          var utils = require('../config');
           var common = require('../common');
           var shaCommon = require('./common');
 
@@ -26851,7 +26851,7 @@
       ],
       149: [
         function (require, module, exports) {
-          var utils = require('../utils');
+          var utils = require('../config');
           var SHA256 = require('./256');
 
           function SHA224() {
@@ -26887,7 +26887,7 @@
       ],
       150: [
         function (require, module, exports) {
-          var utils = require('../utils');
+          var utils = require('../config');
           var common = require('../common');
           var shaCommon = require('./common');
           var assert = require('minimalistic-assert');
@@ -27045,7 +27045,7 @@
       ],
       151: [
         function (require, module, exports) {
-          var utils = require('../utils');
+          var utils = require('../config');
 
           var SHA512 = require('./512');
 
@@ -27089,7 +27089,7 @@
       ],
       152: [
         function (require, module, exports) {
-          var utils = require('../utils');
+          var utils = require('../config');
           var common = require('../common');
           var assert = require('minimalistic-assert');
 
@@ -27539,7 +27539,7 @@
       ],
       153: [
         function (require, module, exports) {
-          var utils = require('../utils');
+          var utils = require('../config');
           var rotr32 = utils.rotr32;
 
           function ft_1(s, x, y, z) {
@@ -58912,7 +58912,7 @@
       199: [
         function (require, module, exports) {
           const crypto = require('crypto');
-          const { checkAndInit, smix } = require('./utils');
+          const { checkAndInit, smix } = require('./config');
 
           // N = Cpu cost, r = Memory cost, p = parallelization cost
           async function scrypt(key, salt, N, r, p, dkLen, progressCallback, promiseInterval) {
@@ -58940,7 +58940,7 @@
       200: [
         function (require, module, exports) {
           const crypto = require('crypto');
-          const { checkAndInit, smixSync } = require('./utils');
+          const { checkAndInit, smixSync } = require('./config');
 
           // N = Cpu cost, r = Memory cost, p = parallelization cost
           function scrypt(key, salt, N, r, p, dkLen, progressCallback) {
@@ -64967,7 +64967,7 @@
            * @returns {Object}
            */
           var inputPostFormatter = function (post) {
-            // post.payload = utils.toHex(post.payload);
+            // post.payload = config.toHex(post.payload);
 
             if (post.ttl) post.ttl = utils.numberToHex(post.ttl);
             if (post.workToProve) post.workToProve = utils.numberToHex(post.workToProve);
@@ -65000,9 +65000,9 @@
             post.ttl = utils.hexToNumber(post.ttl);
             post.workProved = utils.hexToNumber(post.workProved);
             // post.payloadRaw = post.payload;
-            // post.payload = utils.hexToAscii(post.payload);
+            // post.payload = config.hexToAscii(post.payload);
 
-            // if (utils.isJson(post.payload)) {
+            // if (config.isJson(post.payload)) {
             //     post.payload = JSON.parse(post.payload);
             // }
 
@@ -67042,7 +67042,7 @@
           var _ = require('underscore');
           var utils = require('web3-utils');
 
-          var EthersAbi = require('ethers/utils/abi-coder').AbiCoder;
+          var EthersAbi = require('ethers/config/abi-coder').AbiCoder;
           var ethersAbiCoder = new EthersAbi(function (type, value) {
             if (
               type.match(/^u?int/) &&
@@ -73103,7 +73103,7 @@
    along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
    */
           /**
-           * @file utils.js
+           * @file config.js
            * @author Marek Kotewicz <marek@parity.io>
            * @author Fabian Vogelsteller <fabian@ethereum.org>
            * @date 2017
@@ -73111,7 +73111,7 @@
 
           var _ = require('underscore');
           var ethjsUnit = require('ethjs-unit');
-          var utils = require('./utils.js');
+          var utils = require('./config.js');
           var soliditySha3 = require('./soliditySha3.js');
           var randombytes = require('randombytes');
 
@@ -73494,7 +73494,7 @@
 
           var _ = require('underscore');
           var BN = require('bn.js');
-          var utils = require('./utils.js');
+          var utils = require('./config.js');
 
           var _elementaryName = function (name) {
             /*jshint maxcomplexity:false */
@@ -73737,7 +73737,7 @@
    along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
    */
             /**
-             * @file utils.js
+             * @file config.js
              * @author Fabian Vogelsteller <fabian@ethereum.org>
              * @date 2017
              */

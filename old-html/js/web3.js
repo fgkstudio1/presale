@@ -474,7 +474,7 @@
           function DecoderBuffer(base, options) {
             Reporter.call(this, options);
             if (!Buffer.isBuffer(base)) {
-              this.error('Input not Buffer');
+              this.error('TextInput not Buffer');
               return;
             }
 

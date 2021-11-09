@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import logoIcon from 'images/favico-portoken.png';
 
-const Root = styled.input`
+export const ErrorMessage = styled.span`
+  color: #f00;
+`;
+
+export const Input = styled.input`
   background-color: #33363d !important;
   border: none;
   padding: 15px !important;
@@ -10,6 +14,10 @@ const Root = styled.input`
   border-radius: 30px !important;
   background: url(${logoIcon}) right no-repeat;
   background-size: 55px;
+`;
+
+const Root = styled.div`
+  width: 100%;
 `;
 
 export default Root;

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+// @todo: delete
 export const ClaimButton = styled.span`
   background-color: #676767;
   color: #cacaca !important;

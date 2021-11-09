@@ -1,34 +1,32 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Col, Container, ProgressBar, Row } from 'react-bootstrap';
 import Header from 'components/Header';
 import ContentBox from 'components/ContentBox';
 import { useContractContext } from 'contexts/ContractContext';
 import Price from 'components/Price';
-import Input from 'components/Input';
-import arrowDown from 'images/arrow-down.svg';
-import { ClaimButton, Description } from './HomePage.style';
+import Input from 'components/TextInput';
+import TradeForm from 'components/TradeForm';
+import { Description } from './HomePage.style';
 
 const HomePage = () => {
-  const handleClaimButtonClick = useCallback(() => {
-    alert('Claim Portoken');
-  }, []);
-
   const {
-    tokenPrice,
-    hardCap,
-    softCap,
-    minInvest,
-    maxInvest,
-    totalTokens,
-    tokensLeft,
-    totalCollected,
-    openTime,
-    closeTime,
+    values: {
+      tokenPrice,
+      hardCap,
+      softCap,
+      investments,
+      minInvest,
+      maxInvest,
+      totalTokens,
+      totalCollected,
+      openTime,
+      closeTime,
+    },
   } = useContractContext();
 
   const progress = useMemo(() => {
-    return (tokensLeft / totalTokens).toFixed(2);
-  }, [tokensLeft, totalTokens]);
+    return (totalCollected / totalTokens).toFixed(2);
+  }, [totalCollected, totalTokens]);
 
   return (
     <Container className="pt-4">
@@ -48,35 +46,24 @@ const HomePage = () => {
             <ProgressBar now={progress} label={`${progress}%`} striped variant="success" />
 
             <Row>
-              <Col xs={6} md={4} lg={3}>
+              <Col xs={6} md={4}>
                 <Price name={'Softcap'} price={`${softCap} BNB`} />
               </Col>
-              <Col xs={6} md={4} lg={2}>
-                <Price name={'Hardcap'} price={`${hardCap} BNB`} />
-              </Col>
-              <Col xs={6} md={4} lg={2}>
+              <Col xs={6} md={4}>
                 <Price name={'Min Invest'} price={`${minInvest} BNB`} />
               </Col>
-              <Col xs={6} md={4} lg={2}>
-                <Price name={'Max Invest'} price={`${maxInvest} BNB`} />
-              </Col>
-              <Col xs={6} md={4} lg={3}>
+              <Col xs={6} md={4}>
                 <Price name={'Open Time'} price={openTime} />
               </Col>
-
-              <Col xs={6} md={4} lg={3}>
-                <Price name={'Softcap'} price={`${softCap} BNB`} />
-              </Col>
-              <Col xs={6} md={4} lg={2}>
+            </Row>
+            <Row>
+              <Col xs={6} md={4}>
                 <Price name={'Hardcap'} price={`${hardCap} BNB`} />
               </Col>
-              <Col xs={6} md={4} lg={2}>
-                <Price name={'Min Invest'} price={`${minInvest} BNB`} />
-              </Col>
-              <Col xs={6} md={4} lg={2}>
+              <Col xs={6} md={4}>
                 <Price name={'Max Invest'} price={`${maxInvest} BNB`} />
               </Col>
-              <Col xs={6} md={4} lg={3}>
+              <Col xs={6} md={4}>
                 <Price name={'Close Time'} price={closeTime} />
               </Col>
             </Row>
@@ -84,24 +71,15 @@ const HomePage = () => {
             <p className="text-h1 mt-3 mb-0">Your Investment</p>
             <Row style={{ marginTop: '20px' }}>
               <Col xs={6} md={4}>
-                <Price name={'Softcap'} price={'100 BNB'} />
-                <ClaimButton className="btn" onClick={handleClaimButtonClick}>
-                  Claim Portoken
-                </ClaimButton>
+                <Price name={'Your Token'} price={'100 BNB'} />
+              </Col>
+
+              <Col xs={6} md={4}>
+                <Price name={'Your BNB Investment'} price={`${investments} BNB`} />
               </Col>
 
               <Col xs={6} md={4}>
                 <Price name={'Softcap'} price={'100 BNB'} />
-                <ClaimButton className="btn" onClick={handleClaimButtonClick}>
-                  Claim Portoken
-                </ClaimButton>
-              </Col>
-
-              <Col xs={6} md={4}>
-                <Price name={'Softcap'} price={'100 BNB'} />
-                <ClaimButton className="btn" onClick={handleClaimButtonClick}>
-                  Claim Portoken
-                </ClaimButton>
               </Col>
             </Row>
             {/* eslint-disable-next-line max-len */}
@@ -113,29 +91,7 @@ const HomePage = () => {
       </Row>
       <Row className="mt-4">
         <Col sm={12} md={12} lg={6}>
-          <ContentBox title="Buy Portoken">
-            <div className="input-group mt-4">
-              <Input
-                type="number"
-                className="w-100 mt-2"
-                placeholder="0.1 BNB"
-                defaultValue="0.1"
-              />
-              <img
-                src={arrowDown}
-                className="mx-auto justify-content-center mt-3"
-                width="35px"
-                alt=""
-              />
-              <Input
-                type="text"
-                className="w-100 mt-3"
-                readOnly
-                placeholder="149253.73134328358 PORT"
-              />
-            </div>
-            <button className="btn btn-primary buy-button w-100 py-3 ">Buy Portoken</button>
-          </ContentBox>
+          <TradeForm />
         </Col>
         <Col sm={12} md={12} lg={6}>
           <ContentBox title="Claim PORT Token">

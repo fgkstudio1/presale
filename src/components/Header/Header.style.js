@@ -42,20 +42,6 @@ export const ButtonsWrapper = styled.span`
   }
 `;
 
-export const AuthSection = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-
-  .btn,
-  .btn:hover,
-  .btn:active,
-  .btn:focus {
-    color: #212529 !important;
-    border: 0 !important;
-  }
-`;
-
 export const Root = styled.header`
   display: flex;
   align-items: center;

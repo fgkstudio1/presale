@@ -12,6 +12,8 @@ import {
   faDiscord,
 } from '@fortawesome/free-brands-svg-icons';
 import { useContractContext } from 'contexts/ContractContext';
+import logo from 'images/portoken-logo21.png';
+import contract from 'config/contract';
 import Root, {
   Logo,
   SubTitle,
@@ -21,15 +23,24 @@ import Root, {
   AuthSection,
 } from './Header.style';
 
-import logo from 'images/portoken-logo21.png';
-
 const Header = () => {
   const { connect, disconnect, active } = useContractContext();
 
   const [userBsc, setUserBsc] = useState('');
   const [showRefModal, setShowRefModal] = useState(false);
-  const handleAddToMetamaskButtonClick = useCallback(() => {
-    alert('Add to MetaMask');
+  const handleAddToMetamaskButtonClick = useCallback(async () => {
+    await window.ethereum.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20', // Initially only supports ERC20, but eventually more!
+        options: {
+          address: contract.address, // The address that the token is at.
+          symbol: contract.symbol, // A ticker symbol or shorthand, up to 5 chars.
+          decimals: 18, // The number of decimals in the token
+          image: contract.image, // A string url of the token logo
+        },
+      },
+    });
   }, []);
 
   const handleToggleRefModal = useCallback(() => {
@@ -48,29 +59,12 @@ const Header = () => {
 
   return (
     <Root>
-      <AuthSection>
-        {active ? (
-          <Button onClick={disconnect} className="btn-danger mb-4">
-            Disconnect
-          </Button>
-        ) : (
-          <Button onClick={connect} className="btn-success mb-4">
-            Connect
-          </Button>
-        )}
-      </AuthSection>
       <Logo src={logo} alt="Portoken logo" />
       <SubTitle className="mt-4 text-light">Join Portoken Presale</SubTitle>
 
       <SocialIcons>
         <SocialIconLink target="_blank" href="https://twitter.com/portumatoken">
           <FontAwesomeIcon icon={faTwitterSquare} />
-        </SocialIconLink>
-        <SocialIconLink
-          target="_blank"
-          href="https://www.facebook.com/Portumatoken-101476355450848"
-        >
-          <FontAwesomeIcon icon={faFacebookSquare} />
         </SocialIconLink>
         <SocialIconLink target="_blank" href="https://www.instagram.com/portumatoken/">
           <FontAwesomeIcon icon={faInstagramSquare} />
@@ -81,16 +75,10 @@ const Header = () => {
         <SocialIconLink target="_blank" href="https://portumatoken.medium.com/">
           <FontAwesomeIcon icon={faMedium} />
         </SocialIconLink>
-        <SocialIconLink
-          target="_blank"
-          href="https://www.youtube.com/channel/UCWy5m7fs4KWL75u-I8_D_5g?app=desktop"
-        >
-          <FontAwesomeIcon icon={faYoutube} />
-        </SocialIconLink>
         <SocialIconLink target="_blank" href="https://t.me/portumatoken">
           <FontAwesomeIcon icon={faTelegram} />
         </SocialIconLink>
-        <SocialIconLink target="_blank" href="https://discord.com/">
+        <SocialIconLink target="_blank" href="https://discord.com/invite/4Sr4jKChEb">
           <FontAwesomeIcon icon={faDiscord} />
         </SocialIconLink>
       </SocialIcons>
@@ -99,6 +87,15 @@ const Header = () => {
         <Button onClick={handleAddToMetamaskButtonClick} className="btn-light mt-4">
           Add To Metamask
         </Button>
+        {active ? (
+          <Button onClick={disconnect} className="btn-danger mt-4">
+            Disconnect
+          </Button>
+        ) : (
+          <Button onClick={connect} className="btn-success mt-4">
+            Connect
+          </Button>
+        )}
         {/* eslint-disable-next-line max-len */}
         {/*<Button onClick={handleToggleRefModal} className="btn-outline-light mt-4">Get Your Refferal Link</Button>*/}
       </ButtonsWrapper>

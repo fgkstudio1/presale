@@ -176,8 +176,6 @@ export const ContractProvider = (props) => {
 
   const invest = useCallback(
     (value, callback) => {
-      console.log({ from: account, value });
-
       contract.methods
         .invest()
         .send(

@@ -6,7 +6,7 @@ import { useContractContext } from 'contexts/ContractContext';
 import Price from 'components/Price';
 import ClaimForm from 'components/ClaimForm';
 import TradeForm from 'components/TradeForm';
-import { Description } from './HomePage.style';
+import { Description, SpreadToCorners } from './HomePage.style';
 
 const HomePage = () => {
   const {
@@ -17,16 +17,20 @@ const HomePage = () => {
       investments,
       minInvest,
       maxInvest,
+      tokensLeft,
       totalTokens,
       totalCollected,
       openTime,
       closeTime,
+      totalInvestorsCount,
     },
   } = useContractContext();
 
   const progress = useMemo(() => {
-    return (totalCollected / totalTokens).toFixed(2);
-  }, [totalCollected, totalTokens]);
+    const collected = totalTokens - tokensLeft;
+
+    return (collected / totalTokens).toFixed(2);
+  }, [tokensLeft, totalTokens]);
 
   return (
     <Container className="pt-4">
@@ -34,14 +38,21 @@ const HomePage = () => {
 
       <Row>
         <Col>
-          <ContentBox title="Goal">
+          <ContentBox title="Portoken Presale">
             <Description className="text-muted mt-3 mb-0">
               To be among the top 100 coins by creating its own ecosystem and to reach the goal of 1
               billion dollars.
             </Description>
 
             <p className="mt-3 progress-text2 mb-0">{tokenPrice} BNB Per Token</p>
-            <p className="mt-3 progress-text mb-0">{totalCollected} BNB Raised</p>
+
+            <SpreadToCorners>
+              <p className="progress-text">
+                {totalCollected > 0 ? parseFloat(totalCollected).toFixed(4) : '0'} BNB Raised
+              </p>
+
+              <p>{totalInvestorsCount} Participants</p>
+            </SpreadToCorners>
 
             <ProgressBar now={progress} label={`${progress}%`} striped variant="success" />
 

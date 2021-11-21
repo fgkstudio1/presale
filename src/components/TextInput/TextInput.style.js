@@ -12,8 +12,8 @@ export const Input = styled.input`
   color: #c8c8c8;
   font-size: 18px;
   border-radius: 30px !important;
-  background: url(${logoIcon}) right no-repeat;
-  background-size: 55px;
+  background: url(${({ icon }) => (icon ? icon : logoIcon)}) right 7px center no-repeat;
+  background-size: 45px;
 `;
 
 const Root = styled.div`

@@ -3,25 +3,16 @@ import { Button, Modal, InputGroup, FormGroup, FormControl } from 'react-bootstr
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTwitterSquare,
-  faFacebookSquare,
   faInstagramSquare,
   faLinkedin,
   faMedium,
-  faYoutube,
   faTelegram,
   faDiscord,
 } from '@fortawesome/free-brands-svg-icons';
 import { useContractContext } from 'contexts/ContractContext';
 import logo from 'images/portoken-logo21.png';
 import contract from 'config/contract';
-import Root, {
-  Logo,
-  SubTitle,
-  SocialIcons,
-  SocialIconLink,
-  ButtonsWrapper,
-  AuthSection,
-} from './Header.style';
+import Root, { Logo, SubTitle, SocialIcons, SocialIconLink, ButtonsWrapper } from './Header.style';
 
 const Header = () => {
   const { connect, disconnect, active } = useContractContext();

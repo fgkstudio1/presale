@@ -1,9 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import TextInput from 'components/TextInput';
-import arrowDown from 'images/arrow-down.svg';
-import ContentBox from 'components/ContentBox';
+import { toast } from 'react-toastify';
 import { useContractContext } from 'contexts/ContractContext';
+import TextInput from 'components/TextInput';
+import ContentBox from 'components/ContentBox';
+import ToastContent from 'components/ToastContent';
+import contract from 'config/contract.json';
+import arrowDown from 'images/arrow-down.svg';
+import bnbIcon from 'images/bnb2.svg';
 
 const TradeForm = () => {
   const [isInitialValueSet, setIsInitialValueSet] = useState(false);
@@ -12,6 +16,9 @@ const TradeForm = () => {
     methods: { invest },
     active,
   } = useContractContext();
+
+  // total token: 10.000.000.000 => $2.000.000
+  // presale  token: 2.000.000.000 => $400.000
 
   const { register, setValue, handleSubmit, getValues, watch } = useForm({
     defaultValues: {
@@ -24,25 +31,35 @@ const TradeForm = () => {
 
   const handleBnbAmountChange = useCallback(
     (e) => {
-      setValue('tokenAmount', +e.target.value / +tokenPrice);
+      console.log(e.target.value, parseFloat(e.target.value), tokenPrice);
+      setValue('tokenAmount', parseFloat(e.target.value) / tokenPrice);
     },
     [setValue, tokenPrice]
   );
 
   const handleTokenAmountChange = useCallback(
     (e) => {
-      setValue('bnbAmount', +(+e.target.value * +tokenPrice));
+      setValue('bnbAmount', parseFloat(e.target.value) * tokenPrice);
     },
     [setValue, tokenPrice]
   );
 
   const onSubmit = useCallback(
     ({ bnbAmount }) => {
-      invest(bnbAmount, (error, response) => {
+      invest(bnbAmount, (error, transaction) => {
         if (error) {
-          console.log('=== ERROR: ', error);
+          toast(error?.message || error, { type: 'error', autoClose: 10000 });
         } else {
-          console.log('=== RESPONSE: ', response);
+          toast(
+            <ToastContent
+              message="Transaction is in progress"
+              link={`${contract.transactionCheckAddress}/${transaction}`}
+            />,
+            {
+              type: 'success',
+              autoClose: false,
+            }
+          );
         }
       });
     },
@@ -59,7 +76,7 @@ const TradeForm = () => {
   }, [active, getValues, isInitialValueSet, setValue, tokenPrice]);
 
   const isDisabled = useMemo(() => {
-    return !active || !(tokenAmount > 0) || !(bnbAmount > 0);
+    return !active || tokenAmount <= 0 || bnbAmount <= 0;
   }, [active, bnbAmount, tokenAmount]);
 
   return (
@@ -71,6 +88,7 @@ const TradeForm = () => {
             type="text"
             className="w-100 mt-2"
             placeholder="Enter BNB amount to sell"
+            icon={bnbIcon}
             onChange={handleBnbAmountChange}
             disabled={!active}
           />

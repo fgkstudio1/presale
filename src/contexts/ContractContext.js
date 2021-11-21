@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from 're
 import { useWeb3React } from '@web3-react/core';
 import contractConfig from 'config/contract.json';
 import web3 from 'web3';
-import { format, fromUnixTime } from 'date-fns';
+import { format, fromUnixTime, add } from 'date-fns';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import useEagerConnect from '../hooks/useEagerConnect';
 
@@ -21,16 +21,23 @@ export const ContractProvider = (props) => {
   const [openTime, setOpenTime] = useState('');
   const [closeTime, setCloseTime] = useState('');
   const [claimed, setClaimed] = useState(0);
+  const [isClaimed, setIsClaimed] = useState(0);
   const [tokenToClaim, setTokenToClaim] = useState(0);
+  const [claimTime, setClaimTime] = useState('');
   const [hardCap, setHardCap] = useState(0);
   const [softCap, setSoftCap] = useState(0);
   const [investments, setInvestments] = useState(0);
   const [minInvest, setMinInvest] = useState(0);
   const [maxInvest, setMaxInvest] = useState(0);
   const [tokenPrice, setTokenPrice] = useState(0);
+  const [tokenPriceInWei, setTokenPriceInWei] = useState(0);
   const [totalTokens, setTotalTokens] = useState(0);
   const [tokensLeft, setTokensLeft] = useState(0);
   const [totalCollected, setTotalCollected] = useState(0);
+  const [totalInvestorsCount, setTotalInvestorsCount] = useState(0);
+  const status = useMemo(() => {
+    return 'active';
+  }, []);
 
   useEagerConnect(injectedConnector);
 
@@ -52,7 +59,7 @@ export const ContractProvider = (props) => {
 
   const contract = useMemo(() => {
     if (library) {
-      return new library.eth.Contract(contractConfig.abi, contractConfig.address);
+      return new library.eth.Contract(contractConfig.abi, contractConfig.presaleAddress);
     }
 
     return null;
@@ -76,7 +83,10 @@ export const ContractProvider = (props) => {
         .closeTime()
         .call()
         .then((data) => {
-          setCloseTime(format(fromUnixTime(data), 'MMM d, yyyy HH:mm:ss'));
+          const date = fromUnixTime(data);
+
+          setCloseTime(format(date, 'MMM d, yyyy HH:mm:ss'));
+          setClaimTime(format(add(date, { hours: 1 }), 'MMM d, yyyy HH:mm:ss'));
         })
         .catch(handleContractMethodError);
 
@@ -140,6 +150,7 @@ export const ContractProvider = (props) => {
         .tokenPriceInWei()
         .call()
         .then((data) => {
+          setTokenPriceInWei(data);
           setTokenPrice(web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
@@ -167,6 +178,22 @@ export const ContractProvider = (props) => {
           setTotalCollected(web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
+
+      contract.methods
+        .totalInvestorsCount()
+        .call()
+        .then((data) => {
+          setTotalInvestorsCount(data);
+        })
+        .catch(handleContractMethodError);
+
+      contract.methods
+        .claimed(account)
+        .call()
+        .then((data) => {
+          setIsClaimed(data);
+        })
+        .catch(handleContractMethodError);
     }
   }, [account, contract, handleContractMethodError]);
 
@@ -179,7 +206,10 @@ export const ContractProvider = (props) => {
       contract.methods
         .invest()
         .send(
-          { from: account, value: web3.utils.toWei(value.toString()), gasLimit: 150000 },
+          {
+            from: account,
+            value: web3.utils.toWei(value.toString()),
+          },
           callback
         )
         .catch(handleContractMethodError);
@@ -188,13 +218,10 @@ export const ContractProvider = (props) => {
   );
 
   const claimTokens = useCallback(
-    (value, callback) => {
+    (callback) => {
       contract.methods
         .claimTokens()
-        .send(
-          { from: account, value: web3.utils.toWei(value.toString()), gasLimit: 150000 },
-          callback
-        )
+        .send({ from: account }, callback)
         .catch(handleContractMethodError);
     },
     [account, contract, handleContractMethodError]
@@ -213,9 +240,14 @@ export const ContractProvider = (props) => {
         minInvest,
         maxInvest,
         tokenPrice,
+        tokenPriceInWei,
         totalTokens,
         tokensLeft,
         totalCollected,
+        totalInvestorsCount,
+        status,
+        claimTime,
+        isClaimed,
       },
       methods: {
         invest,
@@ -236,6 +268,7 @@ export const ContractProvider = (props) => {
     minInvest,
     maxInvest,
     tokenPrice,
+    tokenPriceInWei,
     totalTokens,
     tokensLeft,
     totalCollected,
@@ -244,6 +277,10 @@ export const ContractProvider = (props) => {
     active,
     invest,
     claimTokens,
+    totalInvestorsCount,
+    status,
+    claimTime,
+    isClaimed,
   ]);
 
   return <ContractContext.Provider value={contextValue}>{children}</ContractContext.Provider>;

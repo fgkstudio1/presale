@@ -2,6 +2,8 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Web3ReactProvider } from '@web3-react/core';
 import Web3 from 'web3';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Root, {
   Global,
   // ReferralInput,
@@ -24,6 +26,7 @@ function App() {
           <HomePage />
         </Root>
       </ContractProvider>
+      <ToastContainer />
     </Web3ReactProvider>
   );
 }

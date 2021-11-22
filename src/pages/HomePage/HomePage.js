@@ -6,6 +6,7 @@ import { useContractContext } from 'contexts/ContractContext';
 import Price from 'components/Price';
 import ClaimForm from 'components/ClaimForm';
 import TradeForm from 'components/TradeForm';
+import formatNumber from 'utils/formatNumber';
 import { Description, SpreadToCorners } from './HomePage.style';
 
 const HomePage = () => {
@@ -29,7 +30,7 @@ const HomePage = () => {
   const progress = useMemo(() => {
     const collected = totalTokens - tokensLeft;
 
-    return (collected / totalTokens).toFixed(2);
+    return formatNumber(collected / totalTokens);
   }, [tokensLeft, totalTokens]);
 
   return (
@@ -47,14 +48,20 @@ const HomePage = () => {
             <p className="mt-3 progress-text2 mb-0">{tokenPrice} BNB Per Token</p>
 
             <SpreadToCorners>
-              <p className="progress-text">
-                {totalCollected > 0 ? parseFloat(totalCollected).toFixed(4) : '0'} BNB Raised
-              </p>
+              <p className="progress-text">{formatNumber(totalCollected)} BNB Raised</p>
 
               <p>{totalInvestorsCount} Participants</p>
             </SpreadToCorners>
 
             <ProgressBar now={progress} label={`${progress}%`} striped variant="success" />
+
+            <SpreadToCorners>
+              <p className="progress-text">{`${progress}%`}</p>
+
+              <p>
+                {formatNumber(totalCollected)} / {hardCap} BNB
+              </p>
+            </SpreadToCorners>
 
             <Row>
               <Col xs={6} md={4}>

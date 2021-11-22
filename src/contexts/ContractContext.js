@@ -15,10 +15,9 @@ const injectedConnector = new InjectedConnector({
 export const ContractProvider = (props) => {
   const { children } = props;
   const { active, account, library, activate, deactivate, chainId } = useWeb3React();
-  const { hardCap, softCap, minInvest, maxInvest } = contractConfig.presaleInformation;
+  const { hardCap, softCap, minInvest, maxInvest, tokenPrice } = contractConfig.presaleInformation;
   const [openTime, setOpenTime] = useState('');
   const [closeTime, setCloseTime] = useState('');
-  const [tokenPrice, setTokenPrice] = useState(0);
   const [claimed, setClaimed] = useState(0);
   const [isClaimed, setIsClaimed] = useState(0);
   const [tokenToClaim, setTokenToClaim] = useState(0);
@@ -97,7 +96,6 @@ export const ContractProvider = (props) => {
         .tokenToClaim(account)
         .call()
         .then((data) => {
-          console.log('=== TOKEN PRICE: ', web3.utils.fromWei(data));
           setTokenToClaim(web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
@@ -107,14 +105,6 @@ export const ContractProvider = (props) => {
         .call()
         .then((data) => {
           setInvestments(web3.utils.fromWei(data));
-        })
-        .catch(handleContractMethodError);
-
-      contract.methods
-        .tokenPriceInWei()
-        .call()
-        .then((data) => {
-          setTokenPrice(web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
 

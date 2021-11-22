@@ -8,6 +8,7 @@ import ClaimForm from 'components/ClaimForm';
 import TradeForm from 'components/TradeForm';
 import formatNumber from 'utils/formatNumber';
 import { Description, SpreadToCorners } from './HomePage.style';
+import contractConfig from 'config/contract.json';
 
 const HomePage = () => {
   const {
@@ -21,6 +22,7 @@ const HomePage = () => {
       tokensLeft,
       totalTokens,
       totalCollected,
+      tokenToClaim,
       openTime,
       closeTime,
       totalInvestorsCount,
@@ -89,7 +91,7 @@ const HomePage = () => {
             <p className="text-h1 mt-3 mb-0">Your Investment</p>
             <Row style={{ marginTop: '20px' }}>
               <Col xs={6} md={4}>
-                <Price name={'Your Token'} price={'100 BNB'} />
+                <Price name={'Your Token'} price={`${tokenToClaim} ${contractConfig.symbol}`} />
               </Col>
 
               <Col xs={6} md={4}>
@@ -97,7 +99,7 @@ const HomePage = () => {
               </Col>
 
               <Col xs={6} md={4}>
-                <Price name={'Softcap'} price={'100 BNB'} />
+                <Price name={'Price'} price={`1 ${contractConfig.symbol} = ${tokenPrice} BNB`} />
               </Col>
             </Row>
             {/* eslint-disable-next-line max-len */}

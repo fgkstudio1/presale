@@ -15,19 +15,15 @@ const injectedConnector = new InjectedConnector({
 export const ContractProvider = (props) => {
   const { children } = props;
   const { active, account, library, activate, deactivate, chainId } = useWeb3React();
+  const { hardCap, softCap, minInvest, maxInvest } = contractConfig.presaleInformation;
   const [openTime, setOpenTime] = useState('');
   const [closeTime, setCloseTime] = useState('');
+  const [tokenPrice, setTokenPrice] = useState(0);
   const [claimed, setClaimed] = useState(0);
   const [isClaimed, setIsClaimed] = useState(0);
   const [tokenToClaim, setTokenToClaim] = useState(0);
   const [claimTime, setClaimTime] = useState('');
-  const [hardCap, setHardCap] = useState(0);
-  const [softCap, setSoftCap] = useState(0);
   const [investments, setInvestments] = useState(0);
-  const [minInvest, setMinInvest] = useState(0);
-  const [maxInvest, setMaxInvest] = useState(0);
-  const [tokenPrice, setTokenPrice] = useState(0);
-  const [tokenPriceInWei, setTokenPriceInWei] = useState(0);
   const [totalTokens, setTotalTokens] = useState(0);
   const [tokensLeft, setTokensLeft] = useState(0);
   const [totalCollected, setTotalCollected] = useState(0);
@@ -78,27 +74,17 @@ export const ContractProvider = (props) => {
     console.error('=== CONTRACT METHOD ERROR: ', error);
   }, []);
 
+  useEffect(() => {
+    const config = contractConfig.presaleInformation;
+
+    setOpenTime(format(fromUnixTime(config.openTime), 'MMM d, yyyy HH:mm:ss'));
+
+    setCloseTime(format(fromUnixTime(config.closeTime), 'MMM d, yyyy HH:mm:ss'));
+    setClaimTime(format(add(fromUnixTime(config.closeTime), { hours: 1 }), 'MMM d, yyyy HH:mm:ss'));
+  }, []);
+
   const runContractMethods = useCallback(() => {
     if (contract) {
-      contract.methods
-        .openTime()
-        .call()
-        .then((data) => {
-          setOpenTime(format(fromUnixTime(data), 'MMM d, yyyy HH:mm:ss'));
-        })
-        .catch(handleContractMethodError);
-
-      contract.methods
-        .closeTime()
-        .call()
-        .then((data) => {
-          const date = fromUnixTime(data);
-
-          setCloseTime(format(date, 'MMM d, yyyy HH:mm:ss'));
-          setClaimTime(format(add(date, { hours: 1 }), 'MMM d, yyyy HH:mm:ss'));
-        })
-        .catch(handleContractMethodError);
-
       contract.methods
         .claimed(account)
         .call()
@@ -111,6 +97,7 @@ export const ContractProvider = (props) => {
         .tokenToClaim(account)
         .call()
         .then((data) => {
+          console.log('=== TOKEN PRICE: ', web3.utils.fromWei(data));
           setTokenToClaim(web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
@@ -124,42 +111,9 @@ export const ContractProvider = (props) => {
         .catch(handleContractMethodError);
 
       contract.methods
-        .hardCapInWei()
-        .call()
-        .then((data) => {
-          setHardCap(web3.utils.fromWei(data));
-        })
-        .catch(handleContractMethodError);
-
-      contract.methods
-        .softCapInWei()
-        .call()
-        .then((data) => {
-          setSoftCap(web3.utils.fromWei(data));
-        })
-        .catch(handleContractMethodError);
-
-      contract.methods
-        .minInvestInWei()
-        .call()
-        .then((data) => {
-          setMinInvest(web3.utils.fromWei(data));
-        })
-        .catch(handleContractMethodError);
-
-      contract.methods
-        .maxInvestInWei()
-        .call()
-        .then((data) => {
-          setMaxInvest(web3.utils.fromWei(data));
-        })
-        .catch(handleContractMethodError);
-
-      contract.methods
         .tokenPriceInWei()
         .call()
         .then((data) => {
-          setTokenPriceInWei(data);
           setTokenPrice(web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
@@ -249,7 +203,6 @@ export const ContractProvider = (props) => {
         minInvest,
         maxInvest,
         tokenPrice,
-        tokenPriceInWei,
         totalTokens,
         tokensLeft,
         totalCollected,
@@ -277,7 +230,6 @@ export const ContractProvider = (props) => {
     minInvest,
     maxInvest,
     tokenPrice,
-    tokenPriceInWei,
     totalTokens,
     tokensLeft,
     totalCollected,

@@ -7,6 +7,14 @@
   "image": "https://portoken.com/images/coin-icon.png",
   "supportedChainIds": [56, 97],
   "switchNetworkChainIdHex": "0x61",
+  "presaleInformation": {
+    "softCap": 1,
+    "hardCap": 800,
+    "minInvest": 0.02,
+    "maxInvest": 10,
+    "openTime": 1637523600,
+    "closeTime": 1637531100
+  },
   "abi": [
     {
       "inputs": [

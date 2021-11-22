@@ -1,19 +1,20 @@
 {
   "address": "0xC5085501C10530588f0d1be5Bb8F276f377cB610",
-  "presaleAddress": "0x84f846A76aC0058Ff478aF46DC791D39ff255800",
+  "presaleAddress": "0xf6ab517731BB07693c3CC838fC726e2815c116b4",
   "transactionCheckAddress": "https://testnet.bscscan.com/tx",
   "symbol": "POR",
   "decimals":18,
   "image": "https://portoken.com/images/coin-icon.png",
-  "supportedChainIds": [56, 97],
-  "switchNetworkChainIdHex": "0x61",
+  "supportedChainIds": [56, 97, 4],
+  "switchNetworkChainIdHex": "0x4",
   "presaleInformation": {
-    "softCap": 1,
-    "hardCap": 800,
-    "minInvest": 0.02,
-    "maxInvest": 10,
-    "openTime": 1637523600,
-    "closeTime": 1637531100
+    "softCap": "1",
+    "hardCap": "800",
+    "minInvest": "0.02",
+    "maxInvest": "10",
+    "openTime": "1637523600",
+    "closeTime": "1637531100",
+    "tokenPrice": "0.0000004"
   },
   "abi": [
     {

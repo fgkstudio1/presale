@@ -5,7 +5,7 @@ import { useContractContext } from 'contexts/ContractContext';
 import TextInput from 'components/TextInput';
 import ContentBox from 'components/ContentBox';
 import ToastContent from 'components/ToastContent';
-import contract from 'config/contract.json';
+import contractConfig from 'config/contract.json';
 import arrowDown from 'images/arrow-down.svg';
 import bnbIcon from 'images/bnb2.svg';
 
@@ -53,7 +53,7 @@ const TradeForm = () => {
           toast(
             <ToastContent
               message="Transaction is in progress"
-              link={`${contract.transactionCheckAddress}/${transaction}`}
+              link={`${contractConfig.transactionCheckAddress}/${transaction}`}
             />,
             {
               type: 'success',

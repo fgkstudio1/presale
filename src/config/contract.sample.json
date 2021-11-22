@@ -1,10 +1,12 @@
 {
-  "address": "0xD8785cac3A76c3f65479b6A4C26aF0A5E9D64f5B",
-  "presaleAddress": "0x7aa30436988E8C5a5Fd5756055AA325e1e6ae035",
+  "address": "0xC5085501C10530588f0d1be5Bb8F276f377cB610",
+  "presaleAddress": "0x84f846A76aC0058Ff478aF46DC791D39ff255800",
   "transactionCheckAddress": "https://testnet.bscscan.com/tx",
-  "symbol": "PORT",
+  "symbol": "POR",
   "decimals":18,
   "image": "https://portoken.com/images/coin-icon.png",
+  "supportedChainIds": [56, 97],
+  "switchNetworkChainIdHex": "0x61",
   "abi": [
     {
       "inputs": [

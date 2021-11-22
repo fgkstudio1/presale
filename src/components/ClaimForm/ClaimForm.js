@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
+import { toast } from 'react-toastify';
+import { useContractContext } from 'contexts/ContractContext';
 import TextInput from 'components/TextInput';
 import ContentBox from 'components/ContentBox';
-import { useContractContext } from 'contexts/ContractContext';
-import { toast } from 'react-toastify';
-import ToastContent from '../ToastContent';
-import contract from 'config/contract.json';
+import ToastContent from 'components/ToastContent';
+import contractConfig from 'config/contract.json';
 
 const ClaimForm = () => {
   const {
@@ -21,7 +21,7 @@ const ClaimForm = () => {
           toast(
             <ToastContent
               message="Transaction is in progress"
-              link={`${contract.transactionCheckAddress}/${transaction}`}
+              link={`${contractConfig.transactionCheckAddress}/${transaction}`}
             />,
             {
               type: 'success',
@@ -34,7 +34,7 @@ const ClaimForm = () => {
   }, [claimTokens]);
 
   return (
-    <ContentBox title="Claim PORT Token">
+    <ContentBox title="Claim POR Token">
       <div className="input-group mt-4">
         <TextInput
           type="text"
@@ -51,7 +51,7 @@ const ClaimForm = () => {
         className="btn btn-primary buy-button claim-max-button w-100 py-3"
         onClick={handleClimButtonClick}
       >
-        {isClaimed ? 'Already Claimed' : 'Claim PORT Tokens'}
+        {isClaimed ? 'Already Claimed' : 'Claim POR Tokens'}
       </button>
     </ContentBox>
   );

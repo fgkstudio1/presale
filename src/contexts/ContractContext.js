@@ -4,20 +4,17 @@ import contractConfig from 'config/contract.json';
 import web3 from 'web3';
 import { format, fromUnixTime, add } from 'date-fns';
 import { InjectedConnector } from '@web3-react/injected-connector';
-import useEagerConnect from '../hooks/useEagerConnect';
+import useEagerConnect from 'hooks/useEagerConnect';
 
 const ContractContext = React.createContext({});
 
 const injectedConnector = new InjectedConnector({
-  supportedChainIds: [
-    56, // mainnet
-    97, // testnet
-  ],
+  supportedChainIds: contractConfig.supportedChainIds,
 });
 
 export const ContractProvider = (props) => {
   const { children } = props;
-  const { active, account, library, activate, deactivate } = useWeb3React();
+  const { active, account, library, activate, deactivate, chainId } = useWeb3React();
   const [openTime, setOpenTime] = useState('');
   const [closeTime, setCloseTime] = useState('');
   const [claimed, setClaimed] = useState(0);
@@ -40,6 +37,18 @@ export const ContractProvider = (props) => {
   }, []);
 
   useEagerConnect(injectedConnector);
+
+  // Switch network
+  useEffect(() => {
+    window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [
+        {
+          chainId: contractConfig.switchNetworkChainIdHex,
+        },
+      ],
+    });
+  }, [chainId]);
 
   const connect = useCallback(async () => {
     try {

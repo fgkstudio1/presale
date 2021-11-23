@@ -42,6 +42,13 @@ export const ContractProvider = (props) => {
     return claimDate <= new Date();
   }, [isClaimed]);
 
+  const canBuy = useMemo(() => {
+    const config = contractConfig.presaleInformation;
+    const openDate = fromUnixTime(config.openTime);
+
+    return openDate <= new Date();
+  }, []);
+
   useEagerConnect(injectedConnector);
 
   // Switch network
@@ -220,6 +227,7 @@ export const ContractProvider = (props) => {
         totalCollected,
         totalInvestorsCount,
         canClaim,
+        canBuy,
         claimTime,
         isClaimed,
       },
@@ -252,6 +260,7 @@ export const ContractProvider = (props) => {
     claimTokens,
     totalInvestorsCount,
     canClaim,
+    canBuy,
     claimTime,
     isClaimed,
   ]);

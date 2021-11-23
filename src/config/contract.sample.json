@@ -7,7 +7,7 @@
   "pancakeSwapAddress": "",
   "auditAddress": "https://solidity.finance/audits/Portuma",
   "symbol": "POR",
-  "decimals":18,
+  "decimals": 18,
   "image": "https://portoken.com/images/coin-icon.png",
   "supportedChainIds": [56, 97, 4],
   "switchNetworkChainIdHex": "0x38",
@@ -24,7 +24,6 @@
   "abi": [
     {
       "inputs": [
-        { "internalType": "contract IERC20", "name": "_token", "type": "address" },
         { "internalType": "uint256", "name": "_totalTokens", "type": "uint256" },
         { "internalType": "uint256", "name": "_tokenPrice", "type": "uint256" },
         { "internalType": "uint256", "name": "_softCap", "type": "uint256" },
@@ -32,7 +31,7 @@
         { "internalType": "uint256", "name": "_minInvest", "type": "uint256" },
         { "internalType": "uint256", "name": "_maxInvest", "type": "uint256" },
         { "internalType": "uint256", "name": "_openTime", "type": "uint256" },
-        { "internalType": "uint256", "name": "_endTime", "type": "uint256" }
+        { "internalType": "uint256", "name": "_closeTime", "type": "uint256" }
       ],
       "stateMutability": "nonpayable",
       "type": "constructor"
@@ -51,6 +50,13 @@
       "name": "activateClaim",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "claimStatus",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -145,6 +151,13 @@
       "type": "function"
     },
     {
+      "inputs": [{ "internalType": "contract IERC20", "name": "tokenAddress", "type": "address" }],
+      "name": "setPresaleToken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "softCapInWei",
       "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -210,6 +223,27 @@
     {
       "inputs": [],
       "name": "transferUnsoldTokens",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "uint256", "name": "_closeTime", "type": "uint256" }],
+      "name": "updateCloseTime",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "uint256", "name": "_openTime", "type": "uint256" }],
+      "name": "updateOpenTime",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "uint256", "name": "_totalTokens", "type": "uint256" }],
+      "name": "updateTotalTokens",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

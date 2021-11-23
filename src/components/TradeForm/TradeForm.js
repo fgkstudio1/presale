@@ -14,7 +14,7 @@ const TradeForm = () => {
   const [isInitialValueSet, setIsInitialValueSet] = useState(false);
   const [bnbAmountError, setBnbAmountError] = useState(false);
   const {
-    values: { tokenPrice, investments, minInvest, maxInvest },
+    values: { tokenPrice, investments, minInvest, maxInvest, canBuy },
     methods: { invest },
     active,
   } = useContractContext();
@@ -107,8 +107,8 @@ const TradeForm = () => {
   }, [active, getValues, isInitialValueSet, setValue, tokenPrice]);
 
   const isDisabled = useMemo(() => {
-    return !active || tokenAmount <= 0 || bnbAmount <= 0 || !!bnbAmountError;
-  }, [active, bnbAmount, bnbAmountError, tokenAmount]);
+    return !active || tokenAmount <= 0 || bnbAmount <= 0 || !!bnbAmountError || !canBuy;
+  }, [active, bnbAmount, bnbAmountError, tokenAmount, canBuy]);
 
   return (
     <ContentBox title="Buy Portoken">

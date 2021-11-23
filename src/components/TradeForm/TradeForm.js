@@ -33,7 +33,13 @@ const TradeForm = () => {
 
   const handleBnbAmountChange = useCallback(
     (e) => {
-      const amount = parseFloat(e.target.value) || 0;
+      let { value } = e.target;
+
+      value = value.replace(/[^0-9.]/gm, '');
+
+      setValue('bnbAmount', value);
+
+      const amount = parseFloat(value) || 0;
 
       const total = parseFloat(investments) + parseFloat(amount);
 

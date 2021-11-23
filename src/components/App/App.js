@@ -4,10 +4,7 @@ import { Web3ReactProvider } from '@web3-react/core';
 import Web3 from 'web3';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Root, {
-  Global,
-  // ReferralInput,
-} from './App.style';
+import Root, { Global } from './App.style';
 
 import { ContractProvider } from 'contexts/ContractContext';
 import HomePage from 'pages/HomePage';
@@ -22,7 +19,6 @@ function App() {
       <ContractProvider>
         <Root>
           <Global />
-
           <HomePage />
         </Root>
       </ContractProvider>

@@ -62,7 +62,7 @@ const ClaimForm = () => {
           value={isClaimed ? 0 : tokenToClaim}
         />
       </div>
-      {canClaim || isClaimed ? (
+      {!canClaim || isClaimed ? (
         <p className="text-muted mt-3">&nbsp;</p>
       ) : (
         <p className="text-muted mt-3">
@@ -70,7 +70,7 @@ const ClaimForm = () => {
         </p>
       )}
       <button
-        disabled={canClaim}
+        disabled={!canClaim}
         className="btn btn-primary buy-button claim-max-button w-100 py-3"
         onClick={handleClimButtonClick}
       >

@@ -17,7 +17,7 @@ const LinkColumn = (props) => {
 
 LinkColumn.propTypes = {
   name: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
 };
 
 export default LinkColumn;

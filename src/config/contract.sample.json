@@ -1,10 +1,9 @@
 {
   "address": "0x592a82160C7cAaEfF06CD93DE0eA2524b58a2b20",
-  "presaleAddress": "0xf6ab517731BB07693c3CC838fC726e2815c116b4",
-  "smartContractAddress": "0x592a82160C7cAaEfF06CD93DE0eA2524b58a2b20",
+  "presaleAddress": "0x403235DE5C99582CCB63CC01d454C3519Ac20295",
   "transactionBaseAddress": "https://testnet.bscscan.com/tx",
   "contractBaseAddress": "https://testnet.bscscan.com/address",
-  "smartContractBaseAddress": "https://testnet.bscscan.com/address",
+  "presaleBaseAddress": "https://bscscan.com/address",
   "pancakeSwapAddress": "https://pancakeswap.finance",
   "auditAddress": "https://solidity.finance/audits/Portuma",
   "symbol": "POR",
@@ -18,8 +17,8 @@
     "minInvest": "0.02",
     "maxInvest": "10",
     "tokenPrice": "0.0000004",
-    "openTime": "1637694000",
-    "closeTime": "1637694000",
+    "openTime": "1637863200",
+    "closeTime": "1638727200",
     "claimOffsetInHours": 24
   },
   "abi": [

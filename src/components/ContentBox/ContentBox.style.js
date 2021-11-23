@@ -8,6 +8,11 @@ const Root = styled.div`
   background-color: #212429;
   border: 2px solid #9c9c9c;
   box-shadow: #7e7d80 0px 2px 6px;
+
+  .title {
+    font-size: 22px;
+    font-weight: 500;
+  }
 `;
 
 export default Root;

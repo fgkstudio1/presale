@@ -46,7 +46,7 @@ export const Root = styled.header`
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
 `;
 
 export default Root;

@@ -8,7 +8,7 @@ import ClaimForm from 'components/ClaimForm';
 import TradeForm from 'components/TradeForm';
 import LinkColumn from 'components/LinkColumn';
 import formatNumber from 'utils/formatNumber';
-import { Description, SpreadToCorners } from './HomePage.style';
+import { Description, SpreadToCorners, LineBreak } from './HomePage.style';
 import contractConfig from 'config/contract.json';
 
 /* eslint-disable max-len */
@@ -44,10 +44,12 @@ const HomePage = () => {
       <Row>
         <Col>
           <ContentBox title="Portoken Presale">
-            <Description className="text-muted mt-3 mb-0">
+            <Description className="text-muted mt-3" style={{ marginBottom: 30 }}>
               To be among the top 100 coins by creating its own ecosystem and to reach the goal of 1
               billion dollars.
             </Description>
+
+            <LineBreak />
 
             <p className="mt-3 progress-text2 mb-0">{tokenPrice} BNB Per Token</p>
 
@@ -68,50 +70,53 @@ const HomePage = () => {
             </SpreadToCorners>
 
             <Row>
-              <Col xs={6} md={4}>
+              <Col xs={{ span: 6, order: 1 }} md={{ span: 4, order: 1 }}>
                 <Price name={'Softcap'} price={`${softCap} BNB`} />
               </Col>
-              <Col xs={6} md={4}>
+              <Col xs={{ span: 6, order: 2 }} md={{ span: 4, order: 1 }}>
                 <Price name={'Min Invest'} price={`${minInvest} BNB`} />
               </Col>
-              <Col xs={6} md={4}>
+              <Col xs={{ span: 6, order: 3 }} md={{ span: 4, order: 1 }}>
                 <Price name={'Open Time'} price={openTime} />
               </Col>
-            </Row>
-            <Row>
-              <Col xs={6} md={4}>
+              <Col xs={{ span: 6, order: 1 }} md={{ span: 4, order: 2 }}>
                 <Price name={'Hardcap'} price={`${hardCap} BNB`} />
               </Col>
-              <Col xs={6} md={4}>
+              <Col xs={{ span: 6, order: 2 }} md={{ span: 4, order: 2 }}>
                 <Price name={'Max Invest'} price={`${maxInvest} BNB`} />
               </Col>
-              <Col xs={6} md={4}>
+              <Col xs={{ span: 6, order: 3 }} md={{ span: 4, order: 2 }}>
                 <Price name={'Close Time'} price={closeTime} />
               </Col>
             </Row>
 
-            <p className="text-h1 mt-3 mb-0">Your Investment</p>
-            <Row style={{ marginTop: '20px' }}>
-              <Col xs={6} md={4}>
+            <p
+              className="text-h1 mb-0 text-center"
+              style={{ marginTop: 50, fontWeight: 'bold', fontSize: 20 }}
+            >
+              Your Investment
+            </p>
+            <Row>
+              <Col xs={12} md={4}>
                 <Price name={'Your Token'} price={`${tokenToClaim} ${contractConfig.symbol}`} />
               </Col>
 
-              <Col xs={6} md={4}>
+              <Col xs={12} md={4}>
                 <Price name={'Your BNB Investment'} price={`${investments} BNB`} />
               </Col>
 
-              <Col xs={6} md={4}>
+              <Col xs={12} md={4}>
                 <Price name={'Price'} price={`1 ${contractConfig.symbol} = ${tokenPrice} BNB`} />
               </Col>
             </Row>
           </ContentBox>
         </Col>
       </Row>
-      <Row className="mt-4">
-        <Col sm={12} md={12} lg={6}>
+      <Row>
+        <Col sm={12} md={12} lg={6} className="mt-4">
           <TradeForm />
         </Col>
-        <Col sm={12} md={12} lg={6}>
+        <Col sm={12} md={12} lg={6} className="mt-4">
           <ClaimForm />
         </Col>
       </Row>
@@ -123,23 +128,28 @@ const HomePage = () => {
               <Col xs={6}>
                 <LinkColumn
                   name={'Token Contract Address'}
-                  linkLabel={'TBA'}
-                  // link={`${contractConfig.contractBaseAddress}/${contractConfig.address}`}
+                  linkLabel={contractConfig.address || 'TBA'}
+                  link={
+                    contractConfig.address
+                      ? `${contractConfig.contractBaseAddress}/${contractConfig.address}`
+                      : null
+                  }
                 />
               </Col>
               <Col xs={6}>
                 <LinkColumn
                   name={'Pancakeswap Address'}
-                  linkLabel="TBA"
-                  // linkLabel={contractConfig.symbol}
-                  // link={contractConfig.pancakeSwapAddress}
+                  linkLabel={contractConfig.pancakeSwapAddress || 'TBA'}
+                  link={
+                    contractConfig.pancakeSwapAddress ? contractConfig.pancakeSwapAddress : null
+                  }
                 />
               </Col>
               <Col xs={6}>
                 <LinkColumn
                   name={'Presale Contract Address'}
-                  linkLabel={contractConfig.smartContractAddress}
-                  link={`${contractConfig.smartContractBaseAddress}/${contractConfig.smartContractAddress}`}
+                  linkLabel={contractConfig.presaleAddress}
+                  link={`${contractConfig.presaleBaseAddress}/${contractConfig.presaleAddress}`}
                 />
               </Col>
               <Col xs={6}>

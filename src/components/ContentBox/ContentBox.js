@@ -7,7 +7,7 @@ const ContentBox = (props) => {
 
   return (
     <Root {...rest}>
-      <h5 className="text-light">{title}</h5>
+      <h5 className="text-light title">{title}</h5>
       {children}
     </Root>
   );

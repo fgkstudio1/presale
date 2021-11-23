@@ -30,7 +30,7 @@ export const Global = createGlobalStyle`
     background-image: linear-gradient(to left top, #000000, #000000, #222123, #060606, #000000, #2a2b2f, #2f3133, #1f2123, #35393c, #393e40, #2b2d2d, #2a2f2f);
     min-height: 100vh;
     background-repeat: no-repeat;
-    padding-bottom: 10rem;
+    padding-bottom: 2rem;
     background-color: #000;
     font-family: 'Poppins', sans-serif;
     -webkit-font-smoothing: antialiased;

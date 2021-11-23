@@ -8,7 +8,7 @@ import ToastContent from 'components/ToastContent';
 import contractConfig from 'config/contract.json';
 import arrowDown from 'images/arrow-down.svg';
 import bnbIcon from 'images/bnb2.svg';
-import { InputError } from './TradeForm.style';
+import { InputError, Button } from './TradeForm.style';
 
 const TradeForm = () => {
   const [isInitialValueSet, setIsInitialValueSet] = useState(false);
@@ -24,7 +24,7 @@ const TradeForm = () => {
 
   const { register, setValue, handleSubmit, getValues, watch } = useForm({
     defaultValues: {
-      bnbAmount: 0.1,
+      bnbAmount: minInvest,
     },
   });
 
@@ -134,13 +134,13 @@ const TradeForm = () => {
             disabled={!active}
           />
         </div>
-        <button
+        <Button
           type={'submit'}
           disabled={isDisabled}
           className="btn btn-primary buy-button w-100 py-3"
         >
           Buy Portoken
-        </button>
+        </Button>
       </form>
     </ContentBox>
   );

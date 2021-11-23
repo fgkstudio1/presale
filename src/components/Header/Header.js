@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { useContractContext } from 'contexts/ContractContext';
 import logo from 'images/portoken-logo21.png';
-import contract from 'config/contract';
+import contractConfig from 'config/contract';
 import Root, { Logo, SubTitle, SocialIcons, SocialIconLink, ButtonsWrapper } from './Header.style';
 
 const Header = () => {
@@ -25,10 +25,10 @@ const Header = () => {
       params: {
         type: 'ERC20', // Initially only supports ERC20, but eventually more!
         options: {
-          address: contract.address, // The address that the token is at.
-          symbol: contract.symbol, // A ticker symbol or shorthand, up to 5 chars.
+          address: contractConfig.address, // The address that the token is at.
+          symbol: contractConfig.symbol, // A ticker symbol or shorthand, up to 5 chars.
           decimals: 18, // The number of decimals in the token
-          image: contract.image, // A string url of the token logo
+          image: contractConfig.image, // A string url of the token logo
         },
       },
     });
@@ -75,7 +75,11 @@ const Header = () => {
       </SocialIcons>
 
       <ButtonsWrapper>
-        <Button onClick={handleAddToMetamaskButtonClick} className="btn-light mt-4">
+        <Button
+          disabled={!contractConfig.address}
+          onClick={handleAddToMetamaskButtonClick}
+          className="btn-light mt-4"
+        >
           Add To Metamask
         </Button>
         {active ? (

@@ -33,4 +33,15 @@ export const SpreadToCorners = styled.div`
 
 export const Description = styled.p`
   font-size: 1.8rem;
+  color: #eaae05 !important;
+  opacity: 0.7;
+`;
+
+export const LineBreak = styled.div`
+  width: 100%;
+  height: 1px;
+  background: #f0f0f0;
+  opacity: 0.2;
+  display: table;
+  margin: 0 auto 40px auto;
 `;

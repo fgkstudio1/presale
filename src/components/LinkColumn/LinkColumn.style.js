@@ -11,6 +11,11 @@ const Root = styled.div`
   a {
     font-weight: bold;
     color: #eaae05;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
   }
 `;
 

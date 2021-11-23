@@ -5,6 +5,7 @@ import TextInput from 'components/TextInput';
 import ContentBox from 'components/ContentBox';
 import ToastContent from 'components/ToastContent';
 import contractConfig from 'config/contract.json';
+import { Button } from './ClaimForm.style';
 
 const ClaimForm = () => {
   const {
@@ -69,13 +70,13 @@ const ClaimForm = () => {
           You Can Claim your Tokens After: <b id="claimTokenDate">{claimTime}</b>
         </p>
       )}
-      <button
+      <Button
         disabled={!canClaim || !tokenToClaim}
         className="btn btn-primary buy-button claim-max-button w-100 py-3"
         onClick={handleClimButtonClick}
       >
         {isClaimed ? 'Already Claimed' : 'Claim POR Tokens'}
-      </button>
+      </Button>
     </ContentBox>
   );
 };

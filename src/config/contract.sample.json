@@ -20,7 +20,7 @@
     "tokenPrice": "0.0000004",
     "openTime": "1637694000",
     "closeTime": "1637694000",
-    "claimOffsetInHours": 1
+    "claimOffsetInHours": 24
   },
   "abi": [
     {

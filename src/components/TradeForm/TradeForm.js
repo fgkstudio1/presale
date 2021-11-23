@@ -8,11 +8,13 @@ import ToastContent from 'components/ToastContent';
 import contractConfig from 'config/contract.json';
 import arrowDown from 'images/arrow-down.svg';
 import bnbIcon from 'images/bnb2.svg';
+import { InputError } from './TradeForm.style';
 
 const TradeForm = () => {
   const [isInitialValueSet, setIsInitialValueSet] = useState(false);
+  const [bnbAmountError, setBnbAmountError] = useState(false);
   const {
-    values: { tokenPrice },
+    values: { tokenPrice, investments, minInvest, maxInvest },
     methods: { invest },
     active,
   } = useContractContext();
@@ -31,16 +33,21 @@ const TradeForm = () => {
 
   const handleBnbAmountChange = useCallback(
     (e) => {
-      setValue('tokenAmount', parseFloat(e.target.value) / tokenPrice);
-    },
-    [setValue, tokenPrice]
-  );
+      const amount = parseFloat(e.target.value) || 0;
 
-  const handleTokenAmountChange = useCallback(
-    (e) => {
-      setValue('bnbAmount', parseFloat(e.target.value) * tokenPrice);
+      const total = parseFloat(investments) + parseFloat(amount);
+
+      if (total < parseFloat(minInvest)) {
+        setBnbAmountError(`You have to invest minimum ${minInvest} BNB`);
+      } else if (total > parseFloat(maxInvest)) {
+        setBnbAmountError(`You have to invest less than ${maxInvest} BNB`);
+      } else {
+        setBnbAmountError(false);
+      }
+
+      setValue('tokenAmount', amount / tokenPrice);
     },
-    [setValue, tokenPrice]
+    [investments, maxInvest, minInvest, setValue, tokenPrice]
   );
 
   const onSubmit = useCallback(
@@ -94,22 +101,25 @@ const TradeForm = () => {
   }, [active, getValues, isInitialValueSet, setValue, tokenPrice]);
 
   const isDisabled = useMemo(() => {
-    return !active || tokenAmount <= 0 || bnbAmount <= 0;
-  }, [active, bnbAmount, tokenAmount]);
+    return !active || tokenAmount <= 0 || bnbAmount <= 0 || !!bnbAmountError;
+  }, [active, bnbAmount, bnbAmountError, tokenAmount]);
 
   return (
     <ContentBox title="Buy Portoken">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="input-group mt-4">
-          <TextInput
-            {...register('bnbAmount')}
-            type="text"
-            className="w-100 mt-2"
-            placeholder="Enter BNB amount to sell"
-            icon={bnbIcon}
-            onChange={handleBnbAmountChange}
-            disabled={!active}
-          />
+          <div style={{ width: '100%' }}>
+            <TextInput
+              {...register('bnbAmount')}
+              type="text"
+              className="w-100 mt-2"
+              placeholder="Enter BNB amount to sell"
+              icon={bnbIcon}
+              onChange={handleBnbAmountChange}
+              disabled={!active}
+            />
+            {bnbAmountError && <InputError>{bnbAmountError}</InputError>}
+          </div>
           <img
             src={arrowDown}
             className="mx-auto justify-content-center mt-3"
@@ -120,7 +130,7 @@ const TradeForm = () => {
             {...register('tokenAmount')}
             type="text"
             className="w-100 mt-3"
-            onChange={handleTokenAmountChange}
+            readOnly
             disabled={!active}
           />
         </div>

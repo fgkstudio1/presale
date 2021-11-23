@@ -1,14 +1,14 @@
 import React from 'react';
-import Root, { Message, Link } from './ToastContent.style';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Root, { Message, Link } from './ToastContent.style';
 
 const ToastContent = (props) => {
-  const { message, link } = props;
+  const { message, link, isLoading } = props;
 
   return (
     <Root>
-      <Message>
+      <Message isLoading={isLoading}>
         {message}
         <Link href={link} target="_blank">
           <FontAwesomeIcon icon={faExternalLinkAlt} />

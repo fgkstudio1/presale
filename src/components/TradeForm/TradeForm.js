@@ -31,7 +31,6 @@ const TradeForm = () => {
 
   const handleBnbAmountChange = useCallback(
     (e) => {
-      console.log(e.target.value, parseFloat(e.target.value), tokenPrice);
       setValue('tokenAmount', parseFloat(e.target.value) / tokenPrice);
     },
     [setValue, tokenPrice]
@@ -46,14 +45,17 @@ const TradeForm = () => {
 
   const onSubmit = useCallback(
     ({ bnbAmount }) => {
+      let toastId = null;
+
       invest(bnbAmount, (error, transaction) => {
         if (error) {
           toast(error?.message || error, { type: 'error', autoClose: 10000 });
         } else {
-          toast(
+          toastId = toast(
             <ToastContent
               message="Transaction is in progress"
               link={`${contractConfig.transactionCheckAddress}/${transaction}`}
+              isLoading
             />,
             {
               type: 'success',
@@ -61,7 +63,23 @@ const TradeForm = () => {
             }
           );
         }
-      });
+      })
+        .then(({ transactionHash }) => {
+          toast.dismiss(toastId);
+
+          toast(
+            <ToastContent
+              message="Transaction successful"
+              link={`${contractConfig.transactionCheckAddress}/${transactionHash}`}
+            />,
+            { type: 'success', autoClose: false }
+          );
+        })
+        .catch((error) => {
+          toast.dismiss(toastId);
+
+          toast(error.message, { type: 'error', autoClose: false });
+        });
     },
     [invest]
   );

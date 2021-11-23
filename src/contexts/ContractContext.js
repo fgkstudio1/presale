@@ -3,14 +3,12 @@ import { useWeb3React } from '@web3-react/core';
 import contractConfig from 'config/contract.json';
 import web3 from 'web3';
 import { format, fromUnixTime, add } from 'date-fns';
-import { InjectedConnector } from '@web3-react/injected-connector';
+import { injectedConnector } from 'utils/connectors';
 import useEagerConnect from 'hooks/useEagerConnect';
+import { useInactiveListener } from '../hooks/useInactiveListener';
+import { toast } from 'react-toastify';
 
 const ContractContext = React.createContext({});
-
-const injectedConnector = new InjectedConnector({
-  supportedChainIds: contractConfig.supportedChainIds,
-});
 
 export const ContractProvider = (props) => {
   const { children } = props;
@@ -27,9 +25,16 @@ export const ContractProvider = (props) => {
   const [tokensLeft, setTokensLeft] = useState(0);
   const [totalCollected, setTotalCollected] = useState(0);
   const [totalInvestorsCount, setTotalInvestorsCount] = useState(0);
-  const status = useMemo(() => {
-    return 'active';
-  }, []);
+  const canClaim = useMemo(() => {
+    if (isClaimed) {
+      return false;
+    }
+
+    const config = contractConfig.presaleInformation;
+    const claimDate = add(fromUnixTime(config.closeTime), { hours: 1 });
+
+    return claimDate > new Date();
+  }, [isClaimed]);
 
   useEagerConnect(injectedConnector);
 
@@ -70,7 +75,7 @@ export const ContractProvider = (props) => {
   }, [library]);
 
   const handleContractMethodError = useCallback((error) => {
-    console.error('=== CONTRACT METHOD ERROR: ', error);
+    toast(error.message, { type: 'error', autoClose: false });
   }, []);
 
   useEffect(() => {
@@ -144,7 +149,7 @@ export const ContractProvider = (props) => {
         .claimed(account)
         .call()
         .then((data) => {
-          setIsClaimed(data);
+          setIsClaimed(data > 0);
         })
         .catch(handleContractMethodError);
     }
@@ -155,7 +160,7 @@ export const ContractProvider = (props) => {
   }, [runContractMethods]);
 
   const invest = useCallback(
-    (value, callback) => {
+    (value, callback) =>
       contract.methods
         .invest()
         .send(
@@ -165,19 +170,25 @@ export const ContractProvider = (props) => {
           },
           callback
         )
-        .catch(handleContractMethodError);
-    },
-    [account, contract, handleContractMethodError]
+        .then((response) => {
+          runContractMethods();
+
+          return Promise.resolve(response);
+        }),
+    [account, contract, runContractMethods]
   );
 
   const claimTokens = useCallback(
-    (callback) => {
+    (callback) =>
       contract.methods
         .claimTokens()
         .send({ from: account }, callback)
-        .catch(handleContractMethodError);
-    },
-    [account, contract, handleContractMethodError]
+        .then((response) => {
+          runContractMethods();
+
+          return Promise.resolve(response);
+        }),
+    [account, contract, runContractMethods]
   );
 
   const contextValue = useMemo(() => {
@@ -197,7 +208,7 @@ export const ContractProvider = (props) => {
         tokensLeft,
         totalCollected,
         totalInvestorsCount,
-        status,
+        canClaim,
         claimTime,
         isClaimed,
       },
@@ -229,7 +240,7 @@ export const ContractProvider = (props) => {
     invest,
     claimTokens,
     totalInvestorsCount,
-    status,
+    canClaim,
     claimTime,
     isClaimed,
   ]);

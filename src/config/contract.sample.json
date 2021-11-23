@@ -1,7 +1,12 @@
 {
   "address": "0x592a82160C7cAaEfF06CD93DE0eA2524b58a2b20",
   "presaleAddress": "0xf6ab517731BB07693c3CC838fC726e2815c116b4",
-  "transactionCheckAddress": "https://testnet.bscscan.com/tx",
+  "smartContractAddress": "0x592a82160C7cAaEfF06CD93DE0eA2524b58a2b20",
+  "transactionBaseAddress": "https://testnet.bscscan.com/tx",
+  "contractBaseAddress": "https://testnet.bscscan.com/address",
+  "smartContractBaseAddress": "https://testnet.bscscan.com/address",
+  "pancakeSwapAddress": "https://pancakeswap.finance",
+  "auditAddress": "https://google.com",
   "symbol": "POR",
   "decimals":18,
   "image": "https://portoken.com/images/coin-icon.png",

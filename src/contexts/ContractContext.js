@@ -5,7 +5,6 @@ import web3 from 'web3';
 import { format, fromUnixTime, add } from 'date-fns';
 import { injectedConnector } from 'utils/connectors';
 import useEagerConnect from 'hooks/useEagerConnect';
-import { useInactiveListener } from '../hooks/useInactiveListener';
 import { toast } from 'react-toastify';
 
 const ContractContext = React.createContext({});

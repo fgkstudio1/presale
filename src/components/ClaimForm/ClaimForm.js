@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useContractContext } from 'contexts/ContractContext';
 import TextInput from 'components/TextInput';
@@ -23,7 +23,7 @@ const ClaimForm = () => {
           toastId = toast(
             <ToastContent
               message="Transaction is in progress"
-              link={`${contractConfig.transactionCheckAddress}/${transaction}`}
+              link={`${contractConfig.transactionBaseAddress}/${transaction}`}
               isLoading
             />,
             {
@@ -39,7 +39,7 @@ const ClaimForm = () => {
           toast(
             <ToastContent
               message="Transaction successful"
-              link={`${contractConfig.transactionCheckAddress}/${transactionHash}`}
+              link={`${contractConfig.transactionBaseAddress}/${transactionHash}`}
             />,
             { type: 'success', autoClose: false }
           );

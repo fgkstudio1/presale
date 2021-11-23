@@ -54,7 +54,7 @@ const TradeForm = () => {
           toastId = toast(
             <ToastContent
               message="Transaction is in progress"
-              link={`${contractConfig.transactionCheckAddress}/${transaction}`}
+              link={`${contractConfig.transactionBaseAddress}/${transaction}`}
               isLoading
             />,
             {
@@ -70,7 +70,7 @@ const TradeForm = () => {
           toast(
             <ToastContent
               message="Transaction successful"
-              link={`${contractConfig.transactionCheckAddress}/${transactionHash}`}
+              link={`${contractConfig.transactionBaseAddress}/${transactionHash}`}
             />,
             { type: 'success', autoClose: false }
           );

@@ -6,10 +6,12 @@ import { useContractContext } from 'contexts/ContractContext';
 import Price from 'components/Price';
 import ClaimForm from 'components/ClaimForm';
 import TradeForm from 'components/TradeForm';
+import LinkColumn from 'components/LinkColumn';
 import formatNumber from 'utils/formatNumber';
 import { Description, SpreadToCorners } from './HomePage.style';
 import contractConfig from 'config/contract.json';
 
+/* eslint-disable max-len */
 const HomePage = () => {
   const {
     values: {
@@ -102,10 +104,6 @@ const HomePage = () => {
                 <Price name={'Price'} price={`1 ${contractConfig.symbol} = ${tokenPrice} BNB`} />
               </Col>
             </Row>
-            {/* eslint-disable-next-line max-len */}
-            {/* <span class="text-warning "> Please first get your airdrop reward. If you buy token first you can't join Airdrop</span>*/}
-            {/* eslint-disable-next-line max-len */}
-            {/*<ReferralInput type="text" id="airinput" readonly value="0x32a33b6cd2Ffc7ccfDfC40aaFb87f6Eb1B31651e" class="input-group refferal-input py-2" />*/}
           </ContentBox>
         </Col>
       </Row>
@@ -117,8 +115,46 @@ const HomePage = () => {
           <ClaimForm />
         </Col>
       </Row>
+
+      <Row style={{ marginTop: 15 }}>
+        <Col>
+          <ContentBox title="Important Links">
+            <Row>
+              <Col xs={6}>
+                <LinkColumn
+                  name={'Token Contract Address'}
+                  linkLabel={contractConfig.address}
+                  link={`${contractConfig.contractBaseAddress}/${contractConfig.address}`}
+                />
+              </Col>
+              <Col xs={6}>
+                <LinkColumn
+                  name={'Pancakeswap Address'}
+                  linkLabel={contractConfig.symbol}
+                  link={contractConfig.pancakeSwapAddress}
+                />
+              </Col>
+              <Col xs={6}>
+                <LinkColumn
+                  name={'Smart Contract'}
+                  linkLabel={contractConfig.smartContractAddress}
+                  link={`${contractConfig.smartContractBaseAddress}/${contractConfig.smartContractAddress}`}
+                />
+              </Col>
+              <Col xs={6}>
+                <LinkColumn
+                  name={'Audit'}
+                  linkLabel={'audit_file_name.pdf'}
+                  link={contractConfig.auditAddress}
+                />
+              </Col>
+            </Row>
+          </ContentBox>
+        </Col>
+      </Row>
     </Container>
   );
 };
+/* eslint-enable */
 
 export default HomePage;

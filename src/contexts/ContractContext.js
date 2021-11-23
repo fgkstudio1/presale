@@ -12,7 +12,14 @@ const ContractContext = React.createContext({});
 export const ContractProvider = (props) => {
   const { children } = props;
   const { active, account, library, activate, deactivate, chainId } = useWeb3React();
-  const { hardCap, softCap, minInvest, maxInvest, tokenPrice } = contractConfig.presaleInformation;
+  const {
+    hardCap,
+    softCap,
+    minInvest,
+    maxInvest,
+    tokenPrice,
+    claimOffsetInHours,
+  } = contractConfig.presaleInformation;
   const [openTime, setOpenTime] = useState('');
   const [closeTime, setCloseTime] = useState('');
   const [claimed, setClaimed] = useState(0);
@@ -30,9 +37,9 @@ export const ContractProvider = (props) => {
     }
 
     const config = contractConfig.presaleInformation;
-    const claimDate = add(fromUnixTime(config.closeTime), { hours: 1 });
+    const claimDate = add(fromUnixTime(config.closeTime), { hours: config.claimOffsetInHours });
 
-    return claimDate > new Date();
+    return claimDate <= new Date();
   }, [isClaimed]);
 
   useEagerConnect(injectedConnector);
@@ -83,8 +90,13 @@ export const ContractProvider = (props) => {
     setOpenTime(format(fromUnixTime(config.openTime), 'MMM d, yyyy HH:mm:ss'));
 
     setCloseTime(format(fromUnixTime(config.closeTime), 'MMM d, yyyy HH:mm:ss'));
-    setClaimTime(format(add(fromUnixTime(config.closeTime), { hours: 1 }), 'MMM d, yyyy HH:mm:ss'));
-  }, []);
+    setClaimTime(
+      format(
+        add(fromUnixTime(config.closeTime), { hours: claimOffsetInHours }),
+        'MMM d, yyyy HH:mm:ss'
+      )
+    );
+  }, [claimOffsetInHours]);
 
   const runContractMethods = useCallback(() => {
     if (contract) {

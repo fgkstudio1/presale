@@ -123,20 +123,21 @@ const HomePage = () => {
               <Col xs={6}>
                 <LinkColumn
                   name={'Token Contract Address'}
-                  linkLabel={contractConfig.address}
-                  link={`${contractConfig.contractBaseAddress}/${contractConfig.address}`}
+                  linkLabel={'TBA'}
+                  // link={`${contractConfig.contractBaseAddress}/${contractConfig.address}`}
                 />
               </Col>
               <Col xs={6}>
                 <LinkColumn
                   name={'Pancakeswap Address'}
-                  linkLabel={contractConfig.symbol}
-                  link={contractConfig.pancakeSwapAddress}
+                  linkLabel="TBA"
+                  // linkLabel={contractConfig.symbol}
+                  // link={contractConfig.pancakeSwapAddress}
                 />
               </Col>
               <Col xs={6}>
                 <LinkColumn
-                  name={'Smart Contract'}
+                  name={'Presale Contract Address'}
                   linkLabel={contractConfig.smartContractAddress}
                   link={`${contractConfig.smartContractBaseAddress}/${contractConfig.smartContractAddress}`}
                 />
@@ -144,7 +145,7 @@ const HomePage = () => {
               <Col xs={6}>
                 <LinkColumn
                   name={'Audit'}
-                  linkLabel={'audit_file_name.pdf'}
+                  linkLabel={'Solidity Finance Audit'}
                   link={contractConfig.auditAddress}
                 />
               </Col>

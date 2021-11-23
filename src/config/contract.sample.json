@@ -6,7 +6,7 @@
   "contractBaseAddress": "https://testnet.bscscan.com/address",
   "smartContractBaseAddress": "https://testnet.bscscan.com/address",
   "pancakeSwapAddress": "https://pancakeswap.finance",
-  "auditAddress": "https://google.com",
+  "auditAddress": "https://solidity.finance/audits/Portuma",
   "symbol": "POR",
   "decimals":18,
   "image": "https://portoken.com/images/coin-icon.png",
@@ -17,9 +17,10 @@
     "hardCap": "800",
     "minInvest": "0.02",
     "maxInvest": "10",
-    "openTime": "1637523600",
-    "closeTime": "1637531100",
-    "tokenPrice": "0.0000004"
+    "tokenPrice": "0.0000004",
+    "openTime": "1637694000",
+    "closeTime": "1637694000",
+    "claimOffsetInHours": 1
   },
   "abi": [
     {

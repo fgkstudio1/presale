@@ -17,7 +17,8 @@ const LinkColumn = (props) => {
 
 LinkColumn.propTypes = {
   name: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+  link: PropTypes.string,
+  linkLabel: PropTypes.string,
 };
 
 export default LinkColumn;

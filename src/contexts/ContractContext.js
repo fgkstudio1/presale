@@ -6,6 +6,7 @@ import { format, fromUnixTime, add } from 'date-fns';
 import { injectedConnector } from 'utils/connectors';
 import useEagerConnect from 'hooks/useEagerConnect';
 import { toast } from 'react-toastify';
+import ToastContent from '../components/ToastContent';
 
 const ContractContext = React.createContext({});
 
@@ -51,9 +52,18 @@ export const ContractProvider = (props) => {
 
   useEagerConnect(injectedConnector);
 
+  useEffect(() => {}, []);
+
   // Switch network
   useEffect(() => {
-    window.ethereum.request({
+    if (!window.ethereum) {
+      toast(<ToastContent message="You have to install MetaMask!" link="https://metamask.io/" />, {
+        type: 'warning',
+      });
+      return;
+    }
+
+    window.ethereum?.request({
       method: 'wallet_switchEthereumChain',
       params: [
         {

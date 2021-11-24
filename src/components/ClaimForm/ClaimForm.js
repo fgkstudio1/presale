@@ -66,7 +66,7 @@ const ClaimForm = () => {
       {canClaim || isClaimed ? (
         <p className="text-muted mt-3">&nbsp;</p>
       ) : (
-        <p className="text-muted mt-3">
+        <p className="text-muted mt-3" style={{ fontSize: 12 }}>
           You Can Claim your Tokens After: <b id="claimTokenDate">{claimTime}</b>
         </p>
       )}

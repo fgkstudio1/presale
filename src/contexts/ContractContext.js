@@ -31,6 +31,7 @@ export const ContractProvider = (props) => {
   const [totalTokens, setTotalTokens] = useState(0);
   const [tokensLeft, setTokensLeft] = useState(0);
   const [totalCollected, setTotalCollected] = useState(0);
+  const [balance, setBalance] = useState(0);
   const [totalInvestorsCount, setTotalInvestorsCount] = useState(0);
   const canClaim = useMemo(() => {
     if (isClaimed) {
@@ -52,7 +53,15 @@ export const ContractProvider = (props) => {
 
   useEagerConnect(injectedConnector);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (!account || !library) {
+      return;
+    }
+
+    library.eth.getBalance(account).then((amount) => {
+      setBalance(web3.utils.fromWei(amount.toString()));
+    });
+  }, [account, library]);
 
   // Switch network
   useEffect(() => {
@@ -240,6 +249,7 @@ export const ContractProvider = (props) => {
         canBuy,
         claimTime,
         isClaimed,
+        balance,
       },
       methods: {
         invest,
@@ -273,6 +283,7 @@ export const ContractProvider = (props) => {
     canBuy,
     claimTime,
     isClaimed,
+    balance,
   ]);
 
   return <ContractContext.Provider value={contextValue}>{children}</ContractContext.Provider>;

@@ -8,13 +8,13 @@ import ToastContent from 'components/ToastContent';
 import contractConfig from 'config/contract.json';
 import arrowDown from 'images/arrow-down.svg';
 import bnbIcon from 'images/bnb2.svg';
-import { InputError, Button } from './TradeForm.style';
+import { InputError, Button, MaxButton } from './TradeForm.style';
 
 const TradeForm = () => {
   const [isInitialValueSet, setIsInitialValueSet] = useState(false);
   const [bnbAmountError, setBnbAmountError] = useState(false);
   const {
-    values: { tokenPrice, investments, minInvest, maxInvest, canBuy },
+    values: { tokenPrice, investments, minInvest, maxInvest, canBuy, balance },
     methods: { invest },
     active,
   } = useContractContext();
@@ -110,11 +110,40 @@ const TradeForm = () => {
     return !active || tokenAmount <= 0 || bnbAmount <= 0 || !!bnbAmountError || !canBuy;
   }, [active, bnbAmount, bnbAmountError, tokenAmount, canBuy]);
 
+  const handleMaxButtonClick = useCallback(() => {
+    const value = parseFloat(maxInvest) - parseFloat(investments);
+    let amount = Math.min(balance, value);
+    amount = amount >= minInvest ? amount : 0;
+
+    if (amount < parseFloat(minInvest)) {
+      setBnbAmountError(`You have to invest minimum ${minInvest} BNB`);
+    } else {
+      setBnbAmountError(false);
+    }
+
+    setValue('bnbAmount', amount);
+    setValue('tokenAmount', amount / tokenPrice);
+  }, [balance, investments, maxInvest, minInvest, setValue, tokenPrice]);
+
+  useEffect(() => {
+    let amount = Math.min(balance, minInvest);
+    amount = amount >= minInvest ? amount : 0;
+
+    if (amount < parseFloat(minInvest)) {
+      setBnbAmountError(`You have to invest minimum ${minInvest} BNB`);
+    } else {
+      setBnbAmountError(false);
+    }
+
+    setValue('bnbAmount', amount);
+    setValue('tokenAmount', amount / tokenPrice);
+  }, [balance, minInvest, setValue, tokenPrice]);
+
   return (
     <ContentBox title="Buy Portoken">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="input-group mt-4">
-          <div style={{ width: '100%' }}>
+          <div style={{ width: '100%', position: 'relative' }}>
             <TextInput
               {...register('bnbAmount')}
               type="text"
@@ -124,6 +153,9 @@ const TradeForm = () => {
               onChange={handleBnbAmountChange}
               disabled={!active}
             />
+            <MaxButton onClick={handleMaxButtonClick} className="btn" variant="outline-secondary">
+              MAX
+            </MaxButton>
             {bnbAmountError && <InputError>{bnbAmountError}</InputError>}
           </div>
           <img

@@ -34,7 +34,7 @@ const HomePage = () => {
   const progress = useMemo(() => {
     const collected = totalTokens - tokensLeft;
 
-    return formatNumber(collected / totalTokens);
+    return formatNumber(collected / totalTokens) * 100;
   }, [tokensLeft, totalTokens]);
 
   return (

@@ -21,8 +21,6 @@ const HomePage = () => {
       investments,
       minInvest,
       maxInvest,
-      tokensLeft,
-      totalTokens,
       totalCollected,
       tokenToClaim,
       openTime,
@@ -32,10 +30,8 @@ const HomePage = () => {
   } = useContractContext();
 
   const progress = useMemo(() => {
-    const collected = totalTokens - tokensLeft;
-
-    return formatNumber((collected / totalTokens) * 100, 2);
-  }, [tokensLeft, totalTokens]);
+    return ((totalCollected / 800) * 100).toFixed(2);
+  }, [totalCollected]);
 
   return (
     <Container className="pt-4">

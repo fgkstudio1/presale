@@ -1,13 +1,12 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import contractConfig from 'config/contract.json';
-import web3 from 'web3';
+import Web3 from 'web3';
 import { format, fromUnixTime, add } from 'date-fns';
 import { injectedConnector } from 'utils/connectors';
 import useEagerConnect from 'hooks/useEagerConnect';
 import { toast } from 'react-toastify';
 import ToastContent from '../components/ToastContent';
-
 const ContractContext = React.createContext({});
 
 export const ContractProvider = (props) => {
@@ -51,6 +50,12 @@ export const ContractProvider = (props) => {
     return openDate <= new Date();
   }, []);
 
+  const httpProvidedContract = useMemo(() => {
+    const provider = new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed.binance.org/'));
+
+    return new provider.eth.Contract(contractConfig.abi, contractConfig.presaleAddress);
+  }, []);
+
   useEagerConnect(injectedConnector);
 
   useEffect(() => {
@@ -59,7 +64,7 @@ export const ContractProvider = (props) => {
     }
 
     library.eth.getBalance(account).then((amount) => {
-      setBalance(web3.utils.fromWei(amount.toString()));
+      setBalance(Web3.utils.fromWei(amount.toString()));
     });
   }, [account, library]);
 
@@ -125,6 +130,25 @@ export const ContractProvider = (props) => {
   }, [claimOffsetInHours]);
 
   const runContractMethods = useCallback(() => {
+    if (httpProvidedContract) {
+      httpProvidedContract.methods
+        .totalCollectedWei()
+        .call()
+        .then((data) => {
+          console.log('=== DATA: ', data);
+          setTotalCollected(Web3.utils.fromWei(data));
+        })
+        .catch(handleContractMethodError);
+
+      httpProvidedContract.methods
+        .totalInvestorsCount()
+        .call()
+        .then((data) => {
+          setTotalInvestorsCount(data);
+        })
+        .catch(handleContractMethodError);
+    }
+
     if (contract) {
       contract.methods
         .claimed(account)
@@ -138,7 +162,7 @@ export const ContractProvider = (props) => {
         .tokenToClaim(account)
         .call()
         .then((data) => {
-          setTokenToClaim(web3.utils.fromWei(data));
+          setTokenToClaim(Web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
 
@@ -146,7 +170,7 @@ export const ContractProvider = (props) => {
         .investments(account)
         .call()
         .then((data) => {
-          setInvestments(web3.utils.fromWei(data));
+          setInvestments(Web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
 
@@ -154,7 +178,7 @@ export const ContractProvider = (props) => {
         .totalTokens()
         .call()
         .then((data) => {
-          setTotalTokens(web3.utils.fromWei(data));
+          setTotalTokens(Web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
 
@@ -162,23 +186,7 @@ export const ContractProvider = (props) => {
         .tokensLeft()
         .call()
         .then((data) => {
-          setTokensLeft(web3.utils.fromWei(data));
-        })
-        .catch(handleContractMethodError);
-
-      contract.methods
-        .totalCollectedWei()
-        .call()
-        .then((data) => {
-          setTotalCollected(web3.utils.fromWei(data));
-        })
-        .catch(handleContractMethodError);
-
-      contract.methods
-        .totalInvestorsCount()
-        .call()
-        .then((data) => {
-          setTotalInvestorsCount(data);
+          setTokensLeft(Web3.utils.fromWei(data));
         })
         .catch(handleContractMethodError);
 
@@ -190,7 +198,7 @@ export const ContractProvider = (props) => {
         })
         .catch(handleContractMethodError);
     }
-  }, [account, contract, handleContractMethodError]);
+  }, [account, contract, handleContractMethodError, httpProvidedContract]);
 
   useEffect(() => {
     runContractMethods();
@@ -203,7 +211,7 @@ export const ContractProvider = (props) => {
         .send(
           {
             from: account,
-            value: web3.utils.toWei(value.toString()),
+            value: Web3.utils.toWei(value.toString()),
           },
           callback
         )

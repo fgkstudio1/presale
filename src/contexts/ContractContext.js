@@ -44,10 +44,11 @@ export const ContractProvider = (props) => {
   }, [isClaimed]);
 
   const canBuy = useMemo(() => {
-    const config = contractConfig.presaleInformation;
-    const openDate = fromUnixTime(config.openTime);
+    // const config = contractConfig.presaleInformation;
+    // const openDate = fromUnixTime(config.openTime);
 
-    return openDate <= new Date();
+    // return openDate <= new Date();
+    return false;
   }, []);
 
   const httpProvidedContract = useMemo(() => {

@@ -37,10 +37,12 @@ export const ContractProvider = (props) => {
       return false;
     }
 
-    const config = contractConfig.presaleInformation;
-    const claimDate = add(fromUnixTime(config.closeTime), { hours: config.claimOffsetInHours });
-
-    return claimDate <= new Date();
+    return true;
+    //
+    // const config = contractConfig.presaleInformation;
+    // const claimDate = add(fromUnixTime(config.closeTime), { hours: config.claimOffsetInHours });
+    //
+    // return claimDate <= new Date();
   }, [isClaimed]);
 
   const canBuy = useMemo(() => {

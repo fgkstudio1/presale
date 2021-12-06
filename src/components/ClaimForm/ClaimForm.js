@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useContractContext } from 'contexts/ContractContext';
 import TextInput from 'components/TextInput';
@@ -12,6 +12,11 @@ const ClaimForm = () => {
     values: { tokenToClaim, claimTime, isClaimed, canClaim },
     methods: { claimTokens },
   } = useContractContext();
+
+  useEffect(() => {
+    console.log('=== TOKEN TO CLAIM: ', tokenToClaim);
+    console.log('=== CAN CLAIM: ', canClaim);
+  }, [canClaim, tokenToClaim]);
 
   const handleClimButtonClick = useCallback(() => {
     if (claimTokens) {

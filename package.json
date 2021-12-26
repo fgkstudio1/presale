@@ -5,7 +5,7 @@
     "start:presale": "cd packages/presale && yarn start",
     "build:presale": "cd packages/presale && yarn build",
     "start:pool": "cd packages/pool && yarn start",
-    "build:pool": "cd packages/pool && build start",
+    "build:pool": "cd packages/pool && yarn build",
     "lint": "eslint ./packages -c .eslintrc.js --ext js,jsx",
     "lint:css": "stylelint './packages/**/*.style.js'",
     "prettier": "prettier --write \"packages/**/*.{js,json,scss,md}\""

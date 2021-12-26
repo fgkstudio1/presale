@@ -28,4 +28,4 @@ logs
 
 .idea
 .eslintcache
-src/config/contract.json
+packages/presale/src/config/contract.json

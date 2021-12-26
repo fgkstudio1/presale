@@ -127,7 +127,7 @@
       ],
       4: [
         function (require, module, exports) {
-          module.exports = require('../../package.json').version;
+          module.exports = require('../../packages/presale/package.json').version;
         },
         { '../package.json': 5 },
       ],
@@ -10350,7 +10350,7 @@
         function (require, module, exports) {
           var elliptic = exports;
 
-          elliptic.version = require('../../package.json').version;
+          elliptic.version = require('../../packages/presale/package.json').version;
           elliptic.utils = require('./elliptic/config');
           elliptic.rand = require('brorand');
           elliptic.curve = require('./elliptic/curve');
@@ -74409,7 +74409,7 @@
            * @date 2017
            */
 
-          var version = require('../../package.json').version;
+          var version = require('../../packages/presale/package.json').version;
           var core = require('web3-core');
           var Eth = require('web3-eth');
           var Net = require('web3-net');

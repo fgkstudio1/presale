@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { useContractContext } from 'contexts/ContractContext';
 import logo from 'images/portoken-logo21.png';
-import contractConfig from 'config/contract';
+import contractConfig from 'config/contract.json';
 import Root, { Logo, SubTitle, SocialIcons, SocialIconLink, ButtonsWrapper } from './Header.style';
 
 const Header = () => {

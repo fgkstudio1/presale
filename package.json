@@ -1,6 +1,8 @@
 {
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "start:presale": "cd packages/presale && yarn start",
     "build:presale": "cd packages/presale && yarn build",
@@ -44,5 +46,8 @@
       "*.json",
       "yarn.lock"
     ]
+  },
+  "dependencies": {
+    "react-scripts": "^5.0.0"
   }
 }
